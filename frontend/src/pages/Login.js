@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../styles/Signin.css";
 import { Link, useNavigate } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 
 const Login = () => {
     // eslint-disable-next-line
@@ -21,14 +21,14 @@ const Login = () => {
                 password,
             };
             try {
-                // const response = await axios.post(
-                //     "http://localhost:5050/users/signin",
-                //     formData
-                // );
-                // localStorage.setItem('auth', response.data.email);
-                // localStorage.setItem('name', response.data.name);
-                // localStorage.setItem('pno', response.data.pno);
-                // localStorage.setItem('dob', response.data.dob);
+                const response = await axios.post(
+                    "http://localhost:5050/users/signin",
+                    formData
+                );
+                localStorage.setItem('auth', response.data.email);
+                localStorage.setItem('name', response.data.name);
+                localStorage.setItem('pno', response.data.pno);
+                localStorage.setItem('dob', response.data.dob);
                 navigate("/dashboard");
             } catch (err) {
                 alert("Invalid email or password");

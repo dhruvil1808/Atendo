@@ -14,7 +14,6 @@ const Nav = () => {
         name: localStorage.getItem("name"),
         pno: localStorage.getItem("pno"),
         dob: localStorage.getItem("dob"),
-        avatar: localStorage.getItem("avatar"),
     });
 
     const toggleUserDetails = () => {
@@ -25,6 +24,15 @@ const Nav = () => {
         if (localStorage.getItem("auth") === null) {
             document.querySelector(".logout").style.display = "none";
         }
+        else {
+            document.querySelector(".logout").style.display = "block";
+        }
+        setuser({
+            email: localStorage.getItem("auth"),
+            name: localStorage.getItem("name"),
+            pno: localStorage.getItem("pno"),
+            dob: localStorage.getItem("dob"),
+        });
     });
 
     return (

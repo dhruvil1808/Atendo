@@ -1,9 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import Image from "../assets/image.png";
-// import Logo from "../assets/logo.png";
-// import GoogleSvg from "../assets/icons8-google.svg";
-// import { FaEye } from "react-icons/fa6";
-// import { FaEyeSlash } from "react-icons/fa6";
 import "../styles/Signup.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -11,7 +6,7 @@ import axios from "axios";
 
 
 
-const Login = () => {
+const Signup = () => {
     // eslint-disable-next-line
     const [showPassword, setShowPassword] = useState(false);
     // eslint-disable-next-line
@@ -26,6 +21,7 @@ const Login = () => {
         let date = e.target.dob.value;
         let pno = e.target.pno.value;
         let email = e.target.email.value;
+        let type = e.target.type.value;
         let password = e.target.password.value;
         let confirmPassword = e.target.confirmPassword.value;
 
@@ -37,6 +33,7 @@ const Login = () => {
                     email,
                     password,
                     pno,
+                    type,
                     dob: date
                 };
                 try {
@@ -73,6 +70,10 @@ const Login = () => {
                         <h2>Welcome to our website!</h2>
                         <p>Please enter your details</p>
                         <form onSubmit={handleRegisterSubmit}>
+                            <select name="type" id="type">
+                                <option value="student">Student</option>
+                                <option value="teacher">Teacher</option>
+                            </select>
                             <input type="text" placeholder="Name" name="name" required={true} />
                             <input type="email" placeholder="Email" name="email" required={true} />
                             <input type="text" placeholder="Phone" name="pno" required={true} />
@@ -106,4 +107,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Signup;
