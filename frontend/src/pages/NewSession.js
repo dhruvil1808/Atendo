@@ -27,6 +27,7 @@ const NewSession = () => {
         let session_id = uuid();
 
         let name = e.target.name.value;
+        let date = new Date();
         let duration = e.target.duration.value;
         let radius = e.target.radius.value;
         //get the current location
@@ -52,6 +53,7 @@ const NewSession = () => {
             const formData = {
                 email: auth,
                 session_id,
+                date,
                 name,
                 duration,
                 location,

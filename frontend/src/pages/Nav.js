@@ -6,7 +6,6 @@ import UserDetails from "./UserDetails"; // Assuming both files are in the same 
 
 const Nav = () => {
     const [showUserDetails, setShowUserDetails] = useState(false);
-
     // Mock user data
     // eslint-disable-next-line
     const [user, setuser] = useState({
@@ -30,7 +29,7 @@ const Nav = () => {
     });
 
     return (
-        <div className="nav-container">
+        <div className='nav-container'>
             <nav>
                 <ul className="nav-links">
                     <li className="nav-link">
