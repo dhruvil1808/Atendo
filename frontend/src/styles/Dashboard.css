@@ -1,0 +1,40 @@
+.dashboard-main {
+  font-size: 30px;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.dashboard-main p {
+  font-size: 20px;
+  padding: 0 20px;
+}
+
+.home-container-login {
+  text-align: center;
+  padding: 20px;
+}
+.home-container-login {
+  text-align: center;
+  padding: 20px;
+}
+
+.login-btn,
+.open-btn {
+  background-color: black;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-btn:hover,
+.open-btn:hover {
+  background-color: #1ed760;
+}

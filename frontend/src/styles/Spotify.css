@@ -1,0 +1,73 @@
+.playlist-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.horizontal-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex; /* Use flexbox for horizontal layout */
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.horizontal-list img {
+  margin-right: 10px; /* Add margin between list items */
+
+  margin: 10px;
+  border-radius: 5px;
+}
+
+.playlist-image {
+  transition: opacity 0.5s ease;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.playlist-details {
+  position: absolute;
+  top: 2.5%;
+  left: 3%;
+  width: 91%;
+  height: 77%;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  padding-left: 10px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  overflow-wrap: break-word;
+  border-radius: 5px;
+}
+
+.playlist-details p {
+  font-size: 20px;
+  margin: 0;
+}
+
+.visible {
+  opacity: 1;
+}
+.home-container-login {
+  text-align: center;
+  padding: 20px;
+}
+
+.spotify-data-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.spotify-data-list li {
+  margin-bottom: 10px;
+}
+
+.spotify-data-list li strong {
+  font-weight: bold;
+  margin-right: 5px;
+}
