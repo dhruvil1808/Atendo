@@ -2,14 +2,20 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../styles/Dashboard.css";
 import { useNavigate } from "react-router-dom";
+import NewSession from "./NewSession";
 
 const Dashboard = () => {
     const [auth, setToken] = useState(localStorage.getItem("auth") || "");
     const [name, setName] = useState(localStorage.getItem("name") || "");
     const [pno, setPno] = useState(localStorage.getItem("pno") || "");
     const [dob, setDob] = useState(localStorage.getItem("dob") || "");
-
+    const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
+
+
+    const togglePopup = () => {
+        setIsOpen(!isOpen);
+    };
 
     useEffect(() => {
         if (auth === "" || auth === undefined) {
@@ -17,20 +23,20 @@ const Dashboard = () => {
         }
     }, []);
 
-    const handleLogout = () => {
-        localStorage.clear();
-        navigate("/login");
-    };
+    const hideThis = (e) => {
+        if (e.target.className === "popup-overlay") {
+            togglePopup();
+        }
+    }
 
     return (
         <div className="dashboard-main">
-            <div className="dashboard-left">
-                <h1>Welcome to Dashboard</h1>
-
-            </div>
-            <div className="dashboard-right">
-                <h1>Dashboard</h1>
-            </div>
+            <button onClick={togglePopup}>Create Session</button>
+            {isOpen && (
+                <div className="popup-overlay" onClick={hideThis}>
+                    <NewSession />
+                </div>
+            )}
         </div>
     );
 

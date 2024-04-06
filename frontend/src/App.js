@@ -1,6 +1,6 @@
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Dashboard, HomeLayout, Landing, Login, Logout, Register, Nav } from "./pages";
+import { Dashboard, HomeLayout, Landing, Login, Logout, Register, Nav, NewSession } from "./pages";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "logout",
         element: <Logout />,
+      },
+      {
+        path: "create-session",
+        element: <NewSession />,
       },
       {
         path: "*",

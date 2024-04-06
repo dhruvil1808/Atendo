@@ -5,6 +5,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import userRoutes from "./routes/userRoutes.js";
+import SessionRoutes from "./routes/SessionRoutes.js";
 
 
 
@@ -30,6 +31,7 @@ mongoose
 
 // Routes
 app.use("/users", userRoutes);
+app.use("/sessions", SessionRoutes);
 
 // Start the server
 app.listen(PORT, () => {

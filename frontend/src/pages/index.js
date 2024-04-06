@@ -5,3 +5,4 @@ export { default as Login } from "./Login";
 export { default as Register } from "./Signup";
 export { default as Logout } from "./Logout";
 export { default as Nav } from "./Nav";
+export { default as NewSession } from "./NewSession";

@@ -27,12 +27,6 @@ const Nav = () => {
         else {
             document.querySelector(".logout").style.display = "block";
         }
-        setuser({
-            email: localStorage.getItem("auth"),
-            name: localStorage.getItem("name"),
-            pno: localStorage.getItem("pno"),
-            dob: localStorage.getItem("dob"),
-        });
     });
 
     return (
