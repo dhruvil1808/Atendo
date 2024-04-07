@@ -24,6 +24,10 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
+        path: "student-dashboard",
+        element: <Dashboard />,
+      },
+      {
         path: "logout",
         element: <Logout />,
       },

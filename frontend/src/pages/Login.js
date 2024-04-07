@@ -25,11 +25,13 @@ const Login = () => {
                     "http://localhost:5050/users/signin",
                     formData
                 );
-                localStorage.setItem('auth', response.data.email);
-                localStorage.setItem('name', response.data.name);
-                localStorage.setItem('pno', response.data.pno);
-                localStorage.setItem('dob', response.data.dob);
-                localStorage.setItem('type', response.data.type);
+                let user = response.data.user;
+                let type = response.data.type;
+                localStorage.setItem('auth', user.email);
+                localStorage.setItem('name', user.name);
+                localStorage.setItem('pno', user.pno);
+                localStorage.setItem('dob', user.dob);
+                localStorage.setItem('type', type);
                 if (response.data.type === "student") {
                     navigate("/student-dashboard");
                 }
@@ -38,7 +40,6 @@ const Login = () => {
                 }
             } catch (err) {
                 alert("Invalid email or password");
-                //clear the form
                 e.target.email.value = "";
                 e.target.password.value = "";
             }
@@ -47,15 +48,16 @@ const Login = () => {
             //clear the form
             e.target.email.value = "";
             e.target.password.value = "";
-
         }
     };
+
+
 
     useEffect(() => {
         if (auth !== "" && auth !== undefined) {
             navigate("/dashboard");
         }
-    }, []);
+    }, [auth]);
 
     return (
         <div className="login-main">
@@ -79,9 +81,9 @@ const Login = () => {
                                     name="password"
                                 />
                                 {showPassword ? (
-                                    console.log("show")
+                                    <a onClick={() => { setShowPassword(false) }} style={{ color: "black" }}>hide</a>
                                 ) : (
-                                    console.log("hide")
+                                    <a onClick={() => { setShowPassword(true) }} style={{ color: "black" }}>see</a>
                                 )}
                             </div>
 

@@ -11,16 +11,17 @@ const Logout = () => {
         localStorage.removeItem("dob");
         localStorage.removeItem("name");
         localStorage.removeItem("pno");
+        localStorage.removeItem("type");
 
         setTimeout(() => {
             navigate("/");
-        }, 3000);
+        }, 2000);
     }, []);
 
     return (
         <div className='logout-main'>
             <h1>Logout Successfull!</h1>
-            <p>You will be redirected to the landing page in 3 seconds...</p>
+            <p>You will be redirected to the landing page in 2 seconds...</p>
         </div>
     )
 }

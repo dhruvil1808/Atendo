@@ -13,8 +13,6 @@ const Signup = () => {
     const [token, setToken] = useState(localStorage.getItem("auth") || "");
     const navigate = useNavigate();
 
-
-
     const handleRegisterSubmit = async (e) => {
         e.preventDefault();
         let name = e.target.name.value;
@@ -50,6 +48,24 @@ const Signup = () => {
         }
     }
 
+    const toggleOne = () => {
+        document.querySelector(".first-slide").style.display = "block";
+        document.querySelector(".second-slide").style.display = "none";
+        document.querySelector(".third-slide").style.display = "none";
+    }
+
+    const toggleTwo = () => {
+        document.querySelector(".first-slide").style.display = "none";
+        document.querySelector(".second-slide").style.display = "block";
+        document.querySelector(".third-slide").style.display = "none";
+    }
+
+    const toggleThree = () => {
+        document.querySelector(".first-slide").style.display = "none";
+        document.querySelector(".second-slide").style.display = "none";
+        document.querySelector(".third-slide").style.display = "block";
+    }
+
     useEffect(() => {
         if (token !== "") {
             navigate("/dashboard");
@@ -70,31 +86,38 @@ const Signup = () => {
                         <h2>Welcome to our website!</h2>
                         <p>Please enter your details</p>
                         <form onSubmit={handleRegisterSubmit}>
-                            <select name="type" id="type">
-                                <option value="student">Student</option>
-                                <option value="teacher">Teacher</option>
-                            </select>
-                            <input type="text" placeholder="Name" name="name" required={true} />
-                            <input type="email" placeholder="Email" name="email" required={true} />
-                            <input type="text" placeholder="Phone" name="pno" required={true} />
-                            <input type="date" name="dob" id="dob" />
-                            <div className="pass-input-div">
-                                <input type={showPassword ? "text" : "password"} placeholder="Password" name="password" required={true} />
-                                {showPassword}
+                            <div className="first-slide">
+                                <select name="type" id="type">
+                                    <option value="student">Student</option>
+                                    <option value="teacher">Teacher</option>
+                                </select>
+                                <input type="text" placeholder="Name" name="name" required={true} />
+                                <input type="email" placeholder="Email" name="email" required={true} />
+                                <button type="button" onClick={toggleTwo}>Next</button>
+                            </div>
+                            <div className="second-slide" style={{ display: "none" }}>
+                                <input type="text" placeholder="Phone" name="pno" required={true} />
+                                <input type="date" name="dob" id="dob" />
+                                <button type="button" onClick={toggleOne}>Back</button>
+                                <button type="button" onClick={toggleThree}>Next</button>
+                            </div>
+                            <div className="third-slide" style={{ display: "none" }}>
+                                <div className="pass-input-div">
+                                    <input type={showPassword ? "text" : "password"} placeholder="Password" name="password" required={true} />
+                                    {showPassword}
 
-                            </div>
-                            <div className="pass-input-div">
-                                <input type={showPassword ? "text" : "password"} placeholder="Confirm Password" name="confirmPassword" required={true} />
-                                {showPassword}
+                                </div>
+                                <div className="pass-input-div">
+                                    <input type={showPassword ? "text" : "password"} placeholder="Confirm Password" name="confirmPassword" required={true} />
+                                    {showPassword}
 
+                                </div>
+                                <button type="button" onClick={toggleTwo}>Back</button>
+                                <div className="register-center-buttons">
+                                    <button type="submit">Sign Up</button>
+                                </div>
                             </div>
-                            <div className="register-center-buttons">
-                                <button type="submit">Sign Up</button>
-                                <button type="submit">
-                                    <img alt="" />
-                                    Sign Up with Google
-                                </button>
-                            </div>
+
                         </form>
                     </div>
 

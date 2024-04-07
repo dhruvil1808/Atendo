@@ -1,0 +1,38 @@
+.user-details-container {
+  position: relative;
+}
+
+.user-details-popup {
+  position: absolute;
+  top: calc(100% + 25px);
+  right: 0;
+  background-color: rgb(54, 54, 54);
+  border: 1px solid #ccc;
+  padding: 10px;
+  color: white;
+}
+
+.user-details-container:hover .user-details-popup {
+  display: block;
+}
+
+.user-details-popup p {
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+.user-details-popup img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.user-details {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.username {
+  margin-right: 10px;
+}

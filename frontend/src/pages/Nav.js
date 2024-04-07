@@ -5,8 +5,7 @@ import { useEffect, useState } from "react";
 import UserDetails from "./UserDetails"; // Assuming both files are in the same directory
 
 const Nav = () => {
-    const [showUserDetails, setShowUserDetails] = useState(false);
-    // Mock user data
+    const [auth, setToken] = useState(localStorage.getItem("auth") || "");
     // eslint-disable-next-line
     const [user, setuser] = useState({
         email: localStorage.getItem("auth"),
@@ -15,39 +14,30 @@ const Nav = () => {
         dob: localStorage.getItem("dob"),
     });
 
-    const toggleUserDetails = () => {
-        setShowUserDetails(!showUserDetails);
-    };
-
     useEffect(() => {
-        if (localStorage.getItem("auth") === null) {
-            document.querySelector(".logout").style.display = "none";
-        }
-        else {
-            document.querySelector(".logout").style.display = "block";
-        }
-    });
+        //check if user is logged in
+        //update the user details
+        setuser({
+            email: localStorage.getItem("auth"),
+            name: localStorage.getItem("name"),
+            pno: localStorage.getItem("pno"),
+            dob: localStorage.getItem("dob"),
+        });
+
+    }, []);
 
     return (
         <div className='nav-container'>
             <nav>
                 <ul className="nav-links">
                     <li className="nav-link">
-                        <a href="/dashboard">Home</a>
+                        <a href="/">Home</a>
                     </li>
-                    <li className="nav-link logout">
+                    <li className="nav-link logout" style={{ display: "none" }}>
                         <a href="/logout">Logout</a>
                     </li>
                 </ul>
-                <UserDetails user={user} onClick={toggleUserDetails} />
-                {showUserDetails && (
-                    <div className="user-details-container">
-                        <p>Username: {user.name}</p>
-                        <p>Email: {user.email}</p>
-                        <p>Phone Number: {user.pno}</p>
-                        <p>Date of Birth: {user.dob}</p>
-                    </div>
-                )}
+                <UserDetails user={user} />
             </nav>
         </div>
     );

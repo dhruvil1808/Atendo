@@ -10,6 +10,7 @@ const userSchema = new schema(
         password: { type: String, required: true },
         sessions: [{
             session_id: { type: String, required: true },
+            date: { type: Date, required: true },
             name: { type: String, required: true },
             duration: { type: String, required: true },
             location: { type: String, required: true },

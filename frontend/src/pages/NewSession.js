@@ -2,10 +2,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import QRCode from 'qrcode.react';
+import QRCode from "qrcode.react";
 import "../styles/NewSession.css";
 
-const NewSession = () => {
+const NewSession = ({ togglePopup }) => {
     const [auth, setToken] = useState(localStorage.getItem("auth") || "");
     const navigate = useNavigate();
     const [qrtoggle, setQrtoggle] = useState(false);
@@ -41,12 +41,12 @@ const NewSession = () => {
                     location = locationString.length > 0 ? locationString : "0,0";
                 },
                 (error) => {
-                    console.error('Error getting geolocation:', error);
+                    console.error("Error getting geolocation:", error);
                 },
                 { enableHighAccuracy: true, maximumAge: 0 }
             );
         } else {
-            console.error('Geolocation is not supported by this browser.');
+            console.error("Geolocation is not supported by this browser.");
         }
 
         if (name.length > 0 && duration.length > 0) {
@@ -66,8 +66,8 @@ const NewSession = () => {
                 );
                 setQrData(response.data.url);
                 setQrtoggle(true);
-
             } catch (err) {
+                console.log("Error creating session");
                 console.log(err);
             }
         } else {
@@ -77,30 +77,45 @@ const NewSession = () => {
 
     const copyQR = () => {
         navigator.clipboard.writeText(qrData);
-    }
+    };
 
     return (
         <div className="popup">
-            {!qrtoggle && <div className="popup-inner">
-                <h5>Create a New Session</h5>
-                <form onSubmit={createQR}>
-                    <input type="text" name="name" placeholder="Session Name" />
-                    <input type="text" name="duration" placeholder="Duration" />
-                    <select name="radius" id="radius">
-                        <option value="50">50 meters</option>
-                        <option value="75">75 meters</option>
-                        <option value="100">100 meters</option>
-                        <option value="150">150 meters</option>
-                    </select>
-                    <button type="submit">Create Session</button>
-                </form>
-            </div>}
-            {
-                qrtoggle && <div className="popup-inner">
+            <button onClick={togglePopup}>
+                <strong>X</strong>
+            </button>
+            {!qrtoggle && (
+                <div className="popup-inner">
+                    <h5>Create a New Session</h5>
+                    <form onSubmit={createQR} >
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Session Name"
+                            autoComplete="off"
+                        />
+                        <input
+                            type="text"
+                            name="duration"
+                            placeholder="Duration"
+                            autoComplete="off"
+                        />
+                        <select name="radius" id="radius" autoComplete="off">
+                            <option value="50">50 meters</option>
+                            <option value="75">75 meters</option>
+                            <option value="100">100 meters</option>
+                            <option value="150">150 meters</option>
+                        </select>
+                        <button type="submit">Create Session</button>
+                    </form>
+                </div>
+            )}
+            {qrtoggle && (
+                <div className="popup-inner">
                     <QRCode value={qrData} onClick={copyQR} />
                 </div>
-            }
-        </div >
+            )}
+        </div>
     );
 };
 

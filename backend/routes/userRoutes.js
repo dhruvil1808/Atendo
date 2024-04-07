@@ -18,7 +18,8 @@ router.post("/signin", async (req, res) => {
     if (user) {
         if (user.password === password) {
             user.type = type;
-            res.send(user);
+            console.log(user);
+            res.send({ "user": user, "type": type });
         } else {
             res.status(400).json({ message: "Invalid email or password" });
         }

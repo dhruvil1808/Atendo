@@ -1,11 +1,10 @@
 .dashboard-main {
   font-size: 30px;
   height: 100vh;
-  width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 9fr;
 }
 
 .dashboard-main p {
@@ -50,6 +49,14 @@
   padding-left: 22.25%;
   padding-top: 16.5%;
 }
+
+.createbtncol {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+}
+
 .createbtn {
   background-color: black;
   color: white;
@@ -59,4 +66,54 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+}
+
+.createbtncol > *,
+.session-list > * {
+  align-self: flex-start;
+}
+
+.session-list {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.session-list h2 {
+  margin: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+}
+
+tbody {
+  font-size: 14px; /* Adjust the value as needed */
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+button {
+  padding: 6px 12px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:focus {
+  outline: none;
 }

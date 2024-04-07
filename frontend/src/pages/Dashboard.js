@@ -27,7 +27,6 @@ const Dashboard = () => {
             console.error(err);
         }
     };
-    updateList();
 
     const toggleSessionDetails = (e) => {
         //get the session details that has session_id = e
@@ -46,17 +45,28 @@ const Dashboard = () => {
         if (auth === "" || auth === undefined) {
             navigate("/login");
         }
-    }, []);
+        else {
+            updateList();
+            document.querySelector(".logout").style.display = "block";
+        }
+    }, [auth]);
 
     return (
         <div className="dashboard-main">
-            <button onClick={togglePopup} className="createbtn">
+            <div className="createbtncol"><button onClick={togglePopup} className="createbtn" >
                 Create Session
-            </button>
+            </button></div>
             <div className="session-list">
                 <h2>Your Sessions</h2>
                 <table>
-                    <thead></thead>
+                    <thead><tr>
+                        <th>Name</th>
+                        <th>Date</th>
+                        <th>Duration</th>
+                        <th>Location</th>
+                        <th>Radius</th>
+                        <th>Action</th>
+                    </tr></thead>
                     {sessionList.length > 0 ? (
                         sessionList.map((session, index) => {
                             return (
@@ -92,8 +102,8 @@ const Dashboard = () => {
                 </div>
             )}
             {isOpen && (
-                <div className="popup-overlay" onClick={togglePopup}>
-                    <NewSession />
+                <div className="popup-overlay">
+                    <NewSession togglePopup={togglePopup} />
                 </div>
             )}
         </div>

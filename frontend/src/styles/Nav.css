@@ -3,56 +3,42 @@
 .nav-container {
   background-color: #333;
   color: #fff;
-  padding: 10px;
-}
-
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .nav-links {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  transition: color 0.3s ease;
 }
 
-.nav-link {
-  display: inline-block;
-  margin-right: 20px;
-  color: white;
+.navbar-link:hover {
+  color: #007bff;
 }
+
 a {
   text-decoration: none;
   color: white;
 }
 
-.user-details-container {
-  position: relative;
+nav {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+}
+nav ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+nav li {
+  list-style-type: none;
+  margin-right: 20px;
+}
+nav a {
+  color: red;
 }
 
-.user-details-popup {
-  position: absolute;
-  top: calc(100% + 10px);
-  right: 0;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  padding: 10px;
-  display: none;
-}
-
-.user-details-container:hover .user-details-popup {
-  display: block;
-}
-
-.user-details-popup p {
+h5 {
   margin: 0;
-  margin-bottom: 5px;
-}
-
-.user-details-popup img {
-  width: 30px; /* Adjust avatar size as needed */
-  height: 30px;
-  border-radius: 50%;
 }

@@ -9,13 +9,18 @@ const NewSession = (props) => {
 
     const [auth, setToken] = useState(localStorage.getItem("auth") || "");
 
-    const getData = async () => {
-        console.log("Getting data");
-        // console.log(props.currentSession);
-        //display the students that have attended the session
+    const getQR = async () => {
+        axios.post("http://localhost:5000/sessions/getQR", {
+            session_id: props.currentSession[0].session_id,
+        })
+            .then((response) => {
+                console.log(response.data.url);
+                return response.data.url;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
-
-    const navigate = useNavigate();
 
     return (
         <div className="popup">
@@ -24,10 +29,11 @@ const NewSession = (props) => {
                     <div className="session-details">
                         {/* <p>Session ID: {props.currentSession[0].session_id}</p> */}
                         <p>Session Name: {props.currentSession[0].name}</p>
-                        <p>Session Date: {props.currentSession[0].date}</p>
+                        <p>Session Date: {props.currentSession[0].date.toISOString().split('T')[0]}</p>
                         <p>Session Duration: {props.currentSession[0].duration}</p>
                         <p>Session Location: {props.currentSession[0].location}</p>
                         <p>Session QR Code:</p>
+                        <QRCode value={getQR} />
                     </div>
                 </div>
             </div>

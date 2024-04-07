@@ -1,5 +1,6 @@
 .login-main {
   display: flex;
+  overflow-y: auto;
 }
 
 .login-left {
@@ -23,10 +24,9 @@
 }
 
 .login-right-container {
-  height: 100%;
+  height: 80%;
   width: 80%;
   margin: 0 auto;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -80,8 +80,8 @@ form input[type="text"] {
   position: relative;
 }
 
-.pass-input-div svg {
-  font-size: 20px;
+.pass-input-div a {
+  font-size: 15px;
   position: absolute;
   right: 10px;
   bottom: 35px;
