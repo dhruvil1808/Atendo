@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import UserDetails from "./UserDetails"; // Assuming both files are in the same directory
 
 const Nav = () => {
-    const [auth, setToken] = useState(localStorage.getItem("auth") || "");
+    // const [auth, setToken] = useState(localStorage.getItem("auth") || "");
     // eslint-disable-next-line
     const [user, setuser] = useState({
         email: localStorage.getItem("auth"),

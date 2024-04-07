@@ -17,8 +17,15 @@
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
+
+.popup-content {
+  display: flex;
+  align-items: center;
+}
+
 .session-details {
-  text-align: center;
+  flex: 1; /* Take remaining space */
+  margin-right: 20px;
 }
 
 .session-details p {
@@ -28,6 +35,11 @@
 
 .session-details button {
   margin-top: 10px;
+}
+
+.qr-code {
+  width: 200px;
+  padding: 20px;
 }
 
 .QRCode {

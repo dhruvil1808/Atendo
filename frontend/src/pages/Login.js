@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../styles/Signin.css";
+import "../styles/Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -51,8 +51,6 @@ const Login = () => {
         }
     };
 
-
-
     useEffect(() => {
         if (auth !== "" && auth !== undefined) {
             navigate("/dashboard");
@@ -62,12 +60,12 @@ const Login = () => {
     return (
         <div className="login-main">
             <div className="login-left">
-                <img alt="" />
+                <img alt="Full" src="/Users/dhruvilpatel/Desktop/Programming/Projects/Atendo/frontend/public/logo512.png" />
             </div>
             <div className="login-right">
                 <div className="login-right-container">
                     <div className="login-logo">
-                        <img alt="" />
+                        <img alt="Logo" src="/Users/dhruvilpatel/Desktop/Programming/Projects/Atendo/frontend/public/logo192.png" />
                     </div>
                     <div className="login-center">
                         <h2>Welcome back!</h2>
@@ -81,9 +79,9 @@ const Login = () => {
                                     name="password"
                                 />
                                 {showPassword ? (
-                                    <a onClick={() => { setShowPassword(false) }} style={{ color: "black" }}>hide</a>
+                                    <button type="button" onClick={() => { setShowPassword(false) }} style={{ color: "white", padding: 0 }}>hide</button>
                                 ) : (
-                                    <a onClick={() => { setShowPassword(true) }} style={{ color: "black" }}>see</a>
+                                    <button type="button" onClick={() => { setShowPassword(true) }} style={{ color: "white", padding: 0 }}>see</button>
                                 )}
                             </div>
 

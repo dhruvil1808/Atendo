@@ -23,7 +23,7 @@ const Signup = () => {
         let password = e.target.password.value;
         let confirmPassword = e.target.confirmPassword.value;
 
-        if (name.length > 0 && email.length > 0 && password.length > 0 && confirmPassword.length > 0) {
+        if (password.length > 0 && confirmPassword.length > 0) {
 
             if (password === confirmPassword) {
                 const formData = {
@@ -35,7 +35,7 @@ const Signup = () => {
                     dob: date
                 };
                 try {
-                    const response = await axios.post("http://localhost:5050/users/signup", formData);
+                    await axios.post("http://localhost:5050/users/signup", formData);
                     navigate("/login");
                 } catch (err) {
                     console.log(err);
@@ -55,22 +55,37 @@ const Signup = () => {
     }
 
     const toggleTwo = () => {
-        document.querySelector(".first-slide").style.display = "none";
-        document.querySelector(".second-slide").style.display = "block";
-        document.querySelector(".third-slide").style.display = "none";
+        let name = document.querySelector("input[name='name']").value;
+        let email = document.querySelector("input[name='email']").value;
+        if (name.length === 0 || email.length === 0) {
+            alert("Please fill all the fields");
+            return;
+        }
+        else {
+            document.querySelector(".first-slide").style.display = "none";
+            document.querySelector(".second-slide").style.display = "block";
+            document.querySelector(".third-slide").style.display = "none";
+        }
     }
 
     const toggleThree = () => {
-        document.querySelector(".first-slide").style.display = "none";
-        document.querySelector(".second-slide").style.display = "none";
-        document.querySelector(".third-slide").style.display = "block";
+        let pno = document.querySelector("input[name='pno']").value;
+        let dob = document.querySelector("input[name='dob']").value;
+        if (pno.length === 0 || dob.length === 0) {
+            alert("Please fill all the fields");
+        }
+        else {
+            document.querySelector(".first-slide").style.display = "none";
+            document.querySelector(".second-slide").style.display = "none";
+            document.querySelector(".third-slide").style.display = "block";
+        }
     }
 
     useEffect(() => {
         if (token !== "") {
             navigate("/dashboard");
         }
-    }, []);
+    });
 
     return (
         <div className="register-main">

@@ -1,13 +1,12 @@
 //create a new session component
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import QRCode from "qrcode.react";
 import "../styles/NewSession.css";
 
 const NewSession = ({ togglePopup }) => {
+    //eslint-disable-next-line
     const [auth, setToken] = useState(localStorage.getItem("auth") || "");
-    const navigate = useNavigate();
     const [qrtoggle, setQrtoggle] = useState(false);
     const [qrData, setQrData] = useState("");
 
@@ -28,6 +27,7 @@ const NewSession = ({ togglePopup }) => {
 
         let name = e.target.name.value;
         let date = new Date();
+        let time = e.target.time.value;
         let duration = e.target.duration.value;
         let radius = e.target.radius.value;
         //get the current location
@@ -54,6 +54,7 @@ const NewSession = ({ togglePopup }) => {
                 email: auth,
                 session_id,
                 date,
+                time,
                 name,
                 duration,
                 location,
@@ -100,6 +101,7 @@ const NewSession = ({ togglePopup }) => {
                             placeholder="Duration"
                             autoComplete="off"
                         />
+                        <input type="text" name="time" placeholder="Time" autoComplete="off" />
                         <select name="radius" id="radius" autoComplete="off">
                             <option value="50">50 meters</option>
                             <option value="75">75 meters</option>
@@ -111,8 +113,9 @@ const NewSession = ({ togglePopup }) => {
                 </div>
             )}
             {qrtoggle && (
-                <div className="popup-inner">
-                    <QRCode value={qrData} onClick={copyQR} />
+                <div className="qr-code">
+                    <QRCode value={qrData} onClick={copyQR} size={200} />
+                    <button onClick={copyQR}>Copy</button>
                 </div>
             )}
         </div>

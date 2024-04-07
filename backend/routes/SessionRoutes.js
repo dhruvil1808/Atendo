@@ -12,10 +12,11 @@ function getQR(session_id) {
 
 //login
 router.post("/create", async (req, res) => {
-    let { session_id, name, duration, location, radius, date } = req.body;
+    let { session_id, name, duration, location, radius, date, time } = req.body;
     let newSession = {
         session_id,
         date,
+        time,
         name,
         duration,
         location,
@@ -49,6 +50,7 @@ router.post("/getSessions", async (req, res) => {
 //get QR
 router.post("/getQR", async (req, res) => {
     try {
+        console.log(req.body.session_id);
         let url = getQR(req.body.session_id);
         res.status(200).json({ url });
     } catch (err) {

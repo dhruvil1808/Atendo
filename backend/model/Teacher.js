@@ -11,6 +11,7 @@ const userSchema = new schema(
         sessions: [{
             session_id: { type: String, required: true },
             date: { type: Date, required: true },
+            time: { type: String, required: true },
             name: { type: String, required: true },
             duration: { type: String, required: true },
             location: { type: String, required: true },

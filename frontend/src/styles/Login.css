@@ -80,11 +80,11 @@ form input[type="text"] {
   position: relative;
 }
 
-.pass-input-div a {
+.pass-input-div button {
   font-size: 15px;
   position: absolute;
-  right: 10px;
-  bottom: 35px;
+  top: 15px;
+  right: 5px;
   cursor: pointer;
   outline: none;
 }
@@ -167,7 +167,6 @@ form button[type="submit"] {
 .login-bottom-p {
   text-align: center;
   font-size: 15px;
-  padding-bottom: 40px;
 }
 
 .login-bottom-p a {

@@ -6,6 +6,7 @@ import NewSession from "./NewSession";
 import SessionDetails from "./SessionDetails";
 
 const Dashboard = () => {
+    //eslint-disable-next-line
     const [auth, setToken] = useState(localStorage.getItem("auth") || "");
     const [sessionList, setSessionList] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
@@ -62,6 +63,7 @@ const Dashboard = () => {
                     <thead><tr>
                         <th>Name</th>
                         <th>Date</th>
+                        <th>Time</th>
                         <th>Duration</th>
                         <th>Location</th>
                         <th>Radius</th>
@@ -73,11 +75,12 @@ const Dashboard = () => {
                                 <tbody key={index}>
                                     <tr key={index + "0"} className="session">
                                         <th key={index + "2"}>{session.name}</th>
-                                        <th key={index + "3"}>{session.date}</th>
-                                        <th key={index + "4"}>{session.duration}</th>
-                                        <th key={index + "5"}>{session.location}</th>
-                                        <th key={index + "6"}>{session.radius}</th>
-                                        <th key={index + "7"}>
+                                        <th key={index + "3"}>{session.date.split('T')[0]}</th>
+                                        <th key={index + "4"}>{session.time}</th>
+                                        <th key={index + "5"}>{session.duration}</th>
+                                        <th key={index + "6"}>{session.location}</th>
+                                        <th key={index + "7"}>{session.radius}</th>
+                                        <th key={index + "8"}>
                                             <button onClick={() => toggleSessionDetails(session.session_id)}>
                                                 Details
                                             </button>
@@ -97,8 +100,8 @@ const Dashboard = () => {
                 </table>
             </div>
             {isSessionDisplay && (
-                <div className="popup-overlay" onClick={toggleSessionDetails}>
-                    <SessionDetails currentSession={currentSession} />
+                <div className="popup-overlay" >
+                    <SessionDetails currentSession={currentSession} toggleSessionDetails={toggleSessionDetails} />
                 </div>
             )}
             {isOpen && (
