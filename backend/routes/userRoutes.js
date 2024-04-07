@@ -7,15 +7,17 @@ import { Teacher } from "../model/Teacher.js";
 //login
 router.post("/signin", async (req, res) => {
     const { email, password } = req.body;
+    let type = "student"
     //check if user is a student
     let user = await Student.findOne({ email });
-
     if (!user) {
+        type = "teacher"
         user = await Teacher.findOne({ email });
     }
 
     if (user) {
         if (user.password === password) {
+            user.type = type;
             res.send(user);
         } else {
             res.status(400).json({ message: "Invalid email or password" });

@@ -29,7 +29,13 @@ const Login = () => {
                 localStorage.setItem('name', response.data.name);
                 localStorage.setItem('pno', response.data.pno);
                 localStorage.setItem('dob', response.data.dob);
-                navigate("/dashboard");
+                localStorage.setItem('type', response.data.type);
+                if (response.data.type === "student") {
+                    navigate("/student-dashboard");
+                }
+                else {
+                    navigate("/teacher-dashboard");
+                }
             } catch (err) {
                 alert("Invalid email or password");
                 //clear the form
