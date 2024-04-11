@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import "../styles/Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import image512 from "../assets/logo512.png";
+import image192 from "../assets/logo192.png";
+const queryParameters = new URLSearchParams(window.location.search);
+
 
 const Login = () => {
     // eslint-disable-next-line
@@ -11,6 +15,14 @@ const Login = () => {
     const navigate = useNavigate();
 
     const handleLoginSubmit = async (e) => {
+        let session_id = ""
+        try {
+            session_id = queryParameters.get("session_id");
+        }
+        catch (err) {
+            console.log(err);
+        }
+
         e.preventDefault();
         let email = e.target.email.value;
         let password = e.target.password.value;
@@ -32,8 +44,8 @@ const Login = () => {
                 localStorage.setItem('pno', user.pno);
                 localStorage.setItem('dob', user.dob);
                 localStorage.setItem('type', type);
-                if (response.data.type === "student") {
-                    navigate("/student-dashboard");
+                if (response.data.type === "student" && session_id !== null) {
+                    navigate("/student-dashboard?session_id=" + session_id);
                 }
                 else {
                     navigate("/teacher-dashboard");
@@ -51,21 +63,26 @@ const Login = () => {
         }
     };
 
+    // window.onload = async function () {
+    //     let code = queryParameters.get("session_id");
+
+    // };
+
     useEffect(() => {
         if (auth !== "" && auth !== undefined) {
-            navigate("/dashboard");
+            navigate("/student-dashboard");
         }
     }, [auth]);
 
     return (
         <div className="login-main">
-            <div className="login-left">
-                <img alt="Full" src="/Users/dhruvilpatel/Desktop/Programming/Projects/Atendo/frontend/public/logo512.png" />
+            <div className="login-left" >
+                <img alt="Full" src={image512} />
             </div>
             <div className="login-right">
                 <div className="login-right-container">
                     <div className="login-logo">
-                        <img alt="Logo" src="/Users/dhruvilpatel/Desktop/Programming/Projects/Atendo/frontend/public/logo192.png" />
+                        <img alt="logo" src={image192} />
                     </div>
                     <div className="login-center">
                         <h2>Welcome back!</h2>

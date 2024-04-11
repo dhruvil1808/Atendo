@@ -3,9 +3,6 @@ import "../styles/Signup.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
-
-
 const Signup = () => {
     // eslint-disable-next-line
     const [showPassword, setShowPassword] = useState(false);

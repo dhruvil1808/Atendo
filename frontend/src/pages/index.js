@@ -6,3 +6,4 @@ export { default as Register } from "./Signup";
 export { default as Logout } from "./Logout";
 export { default as Nav } from "./Nav";
 export { default as NewSession } from "./NewSession";
+export { default as StudentDashboard } from "./StudentDashboard";
