@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import QRCode from 'qrcode.react';
+import { Buffer } from 'buffer';
 import "../styles/SessionDetails.css";
 
 const SessionDetails = (props) => {
@@ -36,7 +37,6 @@ const SessionDetails = (props) => {
             <div className="popup-inner">
                 <div className="popup-content">
                     <div className="session-details">
-                        {/* <p>Session ID: {props.currentSession[0].session_id}</p> */}
                         <p>Session Name: {props.currentSession[0].name}</p>
                         <p>Session Date: {props.currentSession[0].date.split('T')[0]}</p>
                         <p>Session Time: {props.currentSession[0].time}</p>
@@ -47,6 +47,45 @@ const SessionDetails = (props) => {
                         <QRCode value={qr} onClick={copyQR} size={200} />
                         <button onClick={copyQR}>Copy</button>
                     </div>
+                </div>
+                <div className="student-list">
+                    <p>Students Attended:</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Reg No</th>
+                                <th>IP</th>
+                                <th>Email</th>
+                                <th>Location</th>
+                                <th>Image</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {props.currentSession[0].attendance.map((student, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{student.regno}</td>
+                                        <td>{student.IP}</td>
+                                        <td>{student.student_email}</td>
+                                        <td>{student.Location}</td>
+                                        {student.image.data !== undefined ? (
+                                            <td>
+                                                <img
+                                                    src={`data:${student.image.contentType};base64, ${Buffer.from(student.image.data).toString('base64')}`}
+                                                    alt="student"
+                                                    className="student-image"
+                                                    width={100}
+                                                />
+                                            </td>
+                                        ) : (
+                                            <td>No Image</td>
+                                        )
+                                        }
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div >

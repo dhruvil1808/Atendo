@@ -44,6 +44,7 @@ const StudentForm = ({ togglePopup }) => {
         }
 
         if (regno.length > 0) {
+
             const formData = {
                 regno: regno,
                 session_id: localStorage.getItem("session_id"),

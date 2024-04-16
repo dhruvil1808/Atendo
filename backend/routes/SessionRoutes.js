@@ -1,24 +1,17 @@
 import { Router } from "express";
 const router = Router();
 import { Teacher } from "../model/Teacher.js";
+import { Student } from "../model/Student.js";
 import querystring from "querystring";
-import multer from "multer";
+import upload from "../middleware/multer.js";
 import fs from "fs";
 import path from "path";
 
-var storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, './public/uploads/')
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.fieldname + '-' + Date.now())
-    }
-});
-
-var upload = multer({ storage: storage });
-
 function getQR(session_id, email) {
-    let url = `http://localhost:3000/login?${querystring.stringify({ session_id, email })}`;
+    let url = `http://localhost:3000/login?${querystring.stringify({
+        session_id,
+        email,
+    })}`;
     return url;
 }
 
@@ -62,8 +55,6 @@ router.post("/getSessions", async (req, res) => {
 //get QR
 router.post("/getQR", async (req, res) => {
     try {
-        console.log(req.body.session_id);
-        console.log(req.body.email);
         let url = getQR(req.body.session_id, req.body.email);
         res.status(200).json({ url });
     } catch (err) {
@@ -72,24 +63,34 @@ router.post("/getQR", async (req, res) => {
 });
 
 //attend session
-router.post("/attend_session", upload.single("image"), async (req, res) => {
-    let { session_id, teacher_email, regno, IP, student_email, Location } = req.body;
-    let image = fs.readFileSync(path.join('./public/uploads', req.file.filename));
+router.post("/attend_session", async (req, res) => {
+    let { session_id, teacher_email, regno, IP, student_email, Location } =
+        req.body;
+    let image = fs.readFileSync(path.join("./public/uploads", req.file.filename));
     let imagetype = req.file.mimetype;
     let data = {
         data: image,
-        contentType: imagetype
-    }
+        contentType: imagetype,
+    };
     //delete the image
-    fs.unlink(path.join('./public/uploads', req.file.filename), (err) => {
+    fs.unlink(path.join("./public/uploads", req.file.filename), (err) => {
         if (err) throw new Error(err);
-    }
-    );
-    console.log(req.body);
+    });
     try {
         const teacher = await Teacher.findOne({ email: teacher_email });
+        let session_details = {};
         teacher.sessions.map((session) => {
             if (session.session_id === session_id) {
+                session_details = {
+                    session_id: session.session_id,
+                    teacher_email: teacher.email,
+                    name: session.name,
+                    date: session.date,
+                    time: session.time,
+                    duration: session.duration,
+                    location: session.location,
+                    radius: session.radius,
+                };
                 session.attendance.push({
                     regno,
                     image: data,
@@ -102,6 +103,10 @@ router.post("/attend_session", upload.single("image"), async (req, res) => {
         await Teacher.findOneAndUpdate(
             { email: teacher_email },
             { sessions: teacher.sessions }
+        );
+        const student = await Student.findOneAndUpdate(
+            { email: student_email },
+            { $push: { sessions: session_details } }
         );
         res.status(200).json({ message: "Attendance marked successfully" });
     } catch (err) {

@@ -13,14 +13,6 @@ const Dashboard = () => {
     const navigate = useNavigate();
 
     function getSessionDetails() {
-        // axios.get("http://localhost:5000/")
-        //     .then((response) => {
-        //         console.log("response", response.data);
-        //         setSessionList(response.data);
-        //     })
-        //     .catch((error) => {
-        //         console.log("error", error);
-        //     });
     }
 
     function toggleStudentForm() {
