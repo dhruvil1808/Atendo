@@ -16,6 +16,16 @@ const userSchema = new schema(
             duration: { type: String, required: true },
             location: { type: String, required: true },
             radius: { type: String, required: true },
+            attendance: [{
+                regno: { type: String, required: true },
+                image: {
+                    data: Buffer,
+                    contentType: String
+                },
+                IP: { type: String, required: true },
+                student_email: { type: String, required: true },
+                Location: { type: String, required: true },
+            }],
         }],
     },
     { timestamps: true }
