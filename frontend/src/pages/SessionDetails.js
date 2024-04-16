@@ -10,6 +10,7 @@ const SessionDetails = (props) => {
     async function getQR() {
         await axios.post("http://localhost:5050/sessions/getQR", {
             session_id: props.currentSession[0].session_id,
+            email: localStorage.getItem("auth"),
         })
             .then((response) => {
                 setQR(response.data.url);

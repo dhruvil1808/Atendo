@@ -63,13 +63,23 @@ const Login = () => {
         }
     };
 
-    // window.onload = async function () {
-    //     let code = queryParameters.get("session_id");
+    function getQueryVariable(variable) {
+        //get the variable from url
+        let temp = queryParameters.get(variable);
+        //save the variable in local storage
+        localStorage.setItem(variable, temp);
+    }
 
-    // };
+    window.onclick = function (event) {
+        //get the variable from url
+        getQueryVariable("session_id");
+        getQueryVariable("email");
+    }
 
     useEffect(() => {
         if (auth !== "" && auth !== undefined) {
+            getQueryVariable("session_id");
+            getQueryVariable("email");
             navigate("/student-dashboard");
         }
     }, [auth]);
