@@ -16,10 +16,13 @@ const Login = () => {
 
     const handleLoginSubmit = async (e) => {
         let session_id = ""
+        let teacher = ""
         try {
             session_id = queryParameters.get("session_id");
+            teacher = queryParameters.get("email");
         }
         catch (err) {
+
             console.log(err);
         }
 
@@ -44,8 +47,8 @@ const Login = () => {
                 localStorage.setItem('pno', user.pno);
                 localStorage.setItem('dob', user.dob);
                 localStorage.setItem('type', type);
-                if (response.data.type === "student" && session_id !== null) {
-                    navigate("/student-dashboard?session_id=" + session_id);
+                if (response.data.type === "student") {
+                    navigate("/student-dashboard?session_id=" + session_id + "&email=" + teacher);
                 }
                 else {
                     navigate("/teacher-dashboard");
@@ -63,23 +66,8 @@ const Login = () => {
         }
     };
 
-    function getQueryVariable(variable) {
-        //get the variable from url
-        let temp = queryParameters.get(variable);
-        //save the variable in local storage
-        localStorage.setItem(variable, temp);
-    }
-
-    window.onclick = function (event) {
-        //get the variable from url
-        getQueryVariable("session_id");
-        getQueryVariable("email");
-    }
-
     useEffect(() => {
         if (auth !== "" && auth !== undefined) {
-            getQueryVariable("session_id");
-            getQueryVariable("email");
             navigate("/student-dashboard");
         }
     }, [auth]);

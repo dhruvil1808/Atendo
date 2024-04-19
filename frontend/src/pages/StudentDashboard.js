@@ -3,11 +3,12 @@ import axios from "axios";
 import "../styles/Dashboard.css";
 import { useNavigate } from "react-router-dom";
 import StudentForm from "./StudentForm";
+const queryParameters = new URLSearchParams(window.location.search);
 
 const Dashboard = () => {
     //eslint-disable-next-line
     const [auth, setToken] = useState(localStorage.getItem("auth") || "");
-    const [session_id, setSession] = useState(localStorage.getItem("session_id") || "");
+    // eslint-disable-next-line
     const [sessionList, setSessionList] = useState([]);
     const [isSessionDisplay, setSessionDisplay] = useState(false);
     const navigate = useNavigate();
@@ -17,7 +18,6 @@ const Dashboard = () => {
             email: auth,
         })
             .then((response) => {
-                console.log(response.data);
                 setSessionList(response.data.sessions);
             })
             .catch((error) => {
@@ -25,27 +25,42 @@ const Dashboard = () => {
             });
     }
 
-    function toggleStudentForm() {
-        setSessionDisplay(!isSessionDisplay);
-        localStorage.removeItem("session_id");
-        localStorage.removeItem("email");
-    }
-
-    useEffect(() => {
-        if (session_id !== "" && session_id !== undefined) {
+    function toggleStudentForm(action) {
+        if (action === "open") {
             setSessionDisplay(true);
         }
-    }, []);
+        else {
+            localStorage.removeItem("session_id");
+            localStorage.removeItem("email");
+            setSessionDisplay(false);
+            navigate("/student-dashboard");
+        }
+    }
 
 
     useEffect(() => {
+        console.log("useEffect2");
         if (auth === "" || auth === undefined) {
             navigate("/login");
         }
         else {
             getStudentSessions();
             document.querySelector(".logout").style.display = "block";
+            try {
+                localStorage.setItem("session_id", queryParameters.get("session_id"));
+                localStorage.setItem("email", queryParameters.get("email"));
+                if (queryParameters.get("session_id") !== null && queryParameters.get("email") !== null) {
+                    toggleStudentForm("open");
+                }
+                else {
+                    toggleStudentForm("close");
+                }
+            }
+            catch (err) {
+                console.log(err);
+            }
         }
+
     }, [auth]);
 
     return (

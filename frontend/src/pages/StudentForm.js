@@ -44,8 +44,6 @@ const StudentForm = ({ togglePopup }) => {
         startCamera();
     }
 
-
-
     const AttendSession = async (e) => {
         e.preventDefault();
         let regno = e.target.regno.value;
@@ -55,11 +53,16 @@ const StudentForm = ({ togglePopup }) => {
         let res = await axios.get("https://api.ipify.org/?format=json");
         let IP = res.data.ip
         let location = "";
+        console.log("IP is :", IP);
         if (navigator.geolocation) {
+            console.log("Geolocation is supported!");
             navigator.geolocation.getCurrentPosition(
                 (position) => {
+                    console.log("Latitude is :", position.coords.latitude);
+                    console.log("Longitude is :", position.coords.longitude);
                     const { latitude, longitude } = position.coords;
                     const locationString = `${latitude},${longitude}`;
+                    console.log("Location is :", locationString);
                     location = locationString.length > 0 ? locationString : "0,0";
                 },
                 (error) => {
@@ -67,34 +70,33 @@ const StudentForm = ({ togglePopup }) => {
                 },
                 { enableHighAccuracy: true, maximumAge: 0 }
             );
+            if (regno.length > 0) {
+                const formData = {
+                    regno: regno,
+                    session_id: localStorage.getItem("session_id"),
+                    teacher_email: localStorage.getItem("email"),
+                    IP: IP,
+                    Location: location,
+                    student_email: auth,
+                    image: image.data
+                }
+                try {
+                    const response = await axios.post(
+                        "http://localhost:5050/sessions/attend_session",
+                        formData
+                    );
+                    //replace the contents of the popup with the QR code
+                    document.querySelector(".popup-inner").innerHTML = `<h5>${response.data.message}</h5>`;
+                } catch (err) {
+                    console.error(err);
+                }
+            } else {
+                alert("Please fill all the fields");
+            }
         } else {
             console.error("Geolocation is not supported by this browser.");
         }
 
-        if (regno.length > 0) {
-
-            const formData = {
-                regno: regno,
-                session_id: localStorage.getItem("session_id"),
-                teacher_email: localStorage.getItem("email"),
-                IP: IP,
-                Location: location,
-                student_email: auth,
-                image: image.data
-            }
-            try {
-                const response = await axios.post(
-                    "http://localhost:5050/sessions/attend_session",
-                    formData
-                );
-                //replace the contents of the popup with the QR code
-                document.querySelector(".popup-inner").innerHTML = `<h5>${response.data.message}</h5>`;
-            } catch (err) {
-                console.error(err);
-            }
-        } else {
-            alert("Please fill all the fields");
-        }
     };
 
     return (
