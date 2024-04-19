@@ -35,10 +35,35 @@ const NewSession = ({ togglePopup }) => {
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
-                (position) => {
+                async (position) => {
                     const { latitude, longitude } = position.coords;
                     const locationString = `${latitude},${longitude}`;
                     location = locationString.length > 0 ? locationString : "0,0";
+                    if (name.length > 0 && duration.length > 0) {
+                        const formData = {
+                            email: auth,
+                            session_id,
+                            date,
+                            time,
+                            name,
+                            duration,
+                            location,
+                            radius,
+                        };
+                        try {
+                            const response = await axios.post(
+                                "http://localhost:5050/sessions/create",
+                                formData
+                            );
+                            setQrData(response.data.url);
+                            setQrtoggle(true);
+                        } catch (err) {
+                            console.log("Error creating session");
+                            console.log(err);
+                        }
+                    } else {
+                        alert("Please fill all the fields");
+                    }
                 },
                 (error) => {
                     console.error("Error getting geolocation:", error);
@@ -47,32 +72,7 @@ const NewSession = ({ togglePopup }) => {
             );
         } else {
             console.error("Geolocation is not supported by this browser.");
-        }
-
-        if (name.length > 0 && duration.length > 0) {
-            const formData = {
-                email: auth,
-                session_id,
-                date,
-                time,
-                name,
-                duration,
-                location,
-                radius,
-            };
-            try {
-                const response = await axios.post(
-                    "http://localhost:5050/sessions/create",
-                    formData
-                );
-                setQrData(response.data.url);
-                setQrtoggle(true);
-            } catch (err) {
-                console.log("Error creating session");
-                console.log(err);
-            }
-        } else {
-            alert("Please fill all the fields");
+            alert("Geolocation is not supported by this browser.");
         }
     };
 
@@ -88,7 +88,7 @@ const NewSession = ({ togglePopup }) => {
             {!qrtoggle && (
                 <div className="popup-inner">
                     <h5>Create a New Session</h5>
-                    <form onSubmit={createQR} >
+                    <form onSubmit={createQR}>
                         <input
                             type="text"
                             name="name"
@@ -101,7 +101,12 @@ const NewSession = ({ togglePopup }) => {
                             placeholder="Duration"
                             autoComplete="off"
                         />
-                        <input type="text" name="time" placeholder="Time" autoComplete="off" />
+                        <input
+                            type="text"
+                            name="time"
+                            placeholder="Time"
+                            autoComplete="off"
+                        />
                         <select name="radius" id="radius" autoComplete="off">
                             <option value="50">50 meters</option>
                             <option value="75">75 meters</option>
