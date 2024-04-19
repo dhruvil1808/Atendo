@@ -21,6 +21,13 @@ const SessionDetails = (props) => {
             });
     };
 
+    const showImage = (e) => {
+        let image = e.target.src;
+        let imageWindow = window.open("", "_blank");
+        imageWindow.document.write(`<img src=${image} alt="student" width="50%" />`);
+    };
+
+
     const copyQR = () => {
         navigator.clipboard.writeText(qr);
     };
@@ -48,7 +55,7 @@ const SessionDetails = (props) => {
                         <button onClick={copyQR}>Copy</button>
                     </div>
                 </div>
-                <div className="student-list">
+                <div className="student-list scrollable-content">
                     <p>Students Attended:</p>
                     <table>
                         <thead>
@@ -68,14 +75,13 @@ const SessionDetails = (props) => {
                                         <td>{student.IP}</td>
                                         <td>{student.student_email}</td>
                                         <td>{student.Location}</td>
-                                        {student.image.data !== undefined ? (
+                                        {student.image !== undefined ? (
                                             <td>
                                                 <img
-                                                    src={`data:${student.image.contentType};base64, ${Buffer.from(student.image.data).toString('base64')}`}
+                                                    src={student.image}
                                                     alt="student"
                                                     className="student-image"
-                                                    width={100}
-                                                />
+                                                    width={100} onClick={showImage} />
                                             </td>
                                         ) : (
                                             <td>No Image</td>

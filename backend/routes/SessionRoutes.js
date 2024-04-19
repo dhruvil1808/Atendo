@@ -64,18 +64,7 @@ router.post("/getQR", async (req, res) => {
 
 //attend session
 router.post("/attend_session", async (req, res) => {
-    let { session_id, teacher_email, regno, IP, student_email, Location } =
-        req.body;
-    let image = fs.readFileSync(path.join("./public/uploads", req.file.filename));
-    let imagetype = req.file.mimetype;
-    let data = {
-        data: image,
-        contentType: imagetype,
-    };
-    //delete the image
-    fs.unlink(path.join("./public/uploads", req.file.filename), (err) => {
-        if (err) throw new Error(err);
-    });
+    let { session_id, teacher_email, regno, IP, student_email, Location, image } = req.body;
     try {
         const teacher = await Teacher.findOne({ email: teacher_email });
         let session_details = {};
@@ -93,7 +82,7 @@ router.post("/attend_session", async (req, res) => {
                 };
                 session.attendance.push({
                     regno,
-                    image: data,
+                    image,
                     IP,
                     student_email,
                     Location,

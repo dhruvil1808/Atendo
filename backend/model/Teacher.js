@@ -18,10 +18,7 @@ const userSchema = new schema(
             radius: { type: String, required: true },
             attendance: [{
                 regno: { type: String, required: true },
-                image: {
-                    data: Buffer,
-                    contentType: String
-                },
+                image: { type: String, required: true },
                 IP: { type: String, required: true },
                 student_email: { type: String, required: true },
                 Location: { type: String, required: true },

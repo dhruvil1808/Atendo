@@ -1,5 +1,5 @@
 //create a new session component
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import QRCode from "qrcode.react";
 import "../styles/NewSession.css";
@@ -9,14 +9,44 @@ const StudentForm = ({ togglePopup }) => {
     const [auth, setToken] = useState(localStorage.getItem("auth") || "");
     const [image, setImage] = useState({ preview: "", data: "" });
     const [status, setStatus] = useState('')
+    const [photoData, setPhotoData] = useState(""); // To store the captured photo data
+    const videoRef = useRef(null);
 
-    const handleFileChange = (e) => {
-        const img = {
-            preview: URL.createObjectURL(e.target.files[0]),
-            data: e.target.files[0],
-        }
-        setImage(img)
+    const constraints = {
+        video: true
+    };
+    const startCamera = () => {
+        navigator.mediaDevices.getUserMedia(constraints)
+            .then((stream) => {
+                videoRef.current.srcObject = stream;
+            })
+            .catch((error) => {
+                console.error('Error accessing camera:', error);
+            });
+    };
+    const stopCamera = () => {
+        const stream = videoRef.current.srcObject;
+        const tracks = stream.getTracks();
+
+        tracks.forEach(track => track.stop());
+        videoRef.current.srcObject = null;
+    };
+    const capturePhoto = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = videoRef.current.videoWidth;
+        canvas.height = videoRef.current.videoHeight;
+        canvas.getContext('2d').drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+        const photoDataUrl = canvas.toDataURL('image/png');
+        setPhotoData(photoDataUrl);
+        setImage({ preview: photoDataUrl, data: photoDataUrl });
+        stopCamera();
+    };
+    const ResetCamera = () => {
+        setPhotoData("");
+        startCamera();
     }
+
+
 
     const AttendSession = async (e) => {
         e.preventDefault();
@@ -58,7 +88,7 @@ const StudentForm = ({ togglePopup }) => {
             try {
                 const response = await axios.post(
                     "http://localhost:5050/sessions/attend_session",
-                    formData, { headers: { 'Content-Type': 'multipart/form-data' } }
+                    formData
                 );
                 console.log(response.data);
                 //replace the contents of the popup with the QR code
@@ -78,6 +108,14 @@ const StudentForm = ({ togglePopup }) => {
             </button>
             <div className="popup-inner">
                 <h5>Enter Your Details</h5>
+                {!photoData && <video ref={videoRef} width={300} autoPlay={true} />}
+                {photoData && <img src={photoData} width={300} alt="Captured" />}
+                <div>
+                    <button onClick={startCamera}>Start Camera</button>
+                    <button onClick={capturePhoto}>Capture</button>
+                    <button onClick={ResetCamera}>Reset</button>
+                </div>
+
                 <form onSubmit={AttendSession} >
                     <input
                         type="text"
@@ -85,8 +123,6 @@ const StudentForm = ({ togglePopup }) => {
                         placeholder="RegNo"
                         autoComplete="off"
                     />
-                    <input type='file' name='file' onChange={handleFileChange}></input>
-                    {image.preview && <img src={image.preview} width='200' />}
                     <button type="submit">Done</button>
                 </form>
             </div>
