@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../styles/Dashboard.css";
+import "../styles/StudentDashboard.css";
 import { useNavigate } from "react-router-dom";
 import StudentForm from "./StudentForm";
 const queryParameters = new URLSearchParams(window.location.search);
@@ -14,9 +14,10 @@ const Dashboard = () => {
     const navigate = useNavigate();
 
     function getStudentSessions() {
-        axios.post("http://localhost:5050/sessions/getStudentSessions", {
-            email: auth,
-        })
+        axios
+            .post("http://localhost:5050/sessions/getStudentSessions", {
+                email: auth,
+            })
             .then((response) => {
                 setSessionList(response.data.sessions);
             })
@@ -28,8 +29,7 @@ const Dashboard = () => {
     function toggleStudentForm(action) {
         if (action === "open") {
             setSessionDisplay(true);
-        }
-        else {
+        } else {
             localStorage.removeItem("session_id");
             localStorage.removeItem("email");
             setSessionDisplay(false);
@@ -37,30 +37,35 @@ const Dashboard = () => {
         }
     }
 
+    function getDistance(distance, radius) {
+        return {
+            distance,
+            color: distance <= radius ? "green" : "red"
+        };
+    }
 
     useEffect(() => {
         console.log("useEffect2");
         if (auth === "" || auth === undefined) {
             navigate("/login");
-        }
-        else {
+        } else {
             getStudentSessions();
             document.querySelector(".logout").style.display = "block";
             try {
                 localStorage.setItem("session_id", queryParameters.get("session_id"));
                 localStorage.setItem("email", queryParameters.get("email"));
-                if (queryParameters.get("session_id") !== null && queryParameters.get("email") !== null) {
+                if (
+                    queryParameters.get("session_id") !== null &&
+                    queryParameters.get("email") !== null
+                ) {
                     toggleStudentForm("open");
-                }
-                else {
+                } else {
                     toggleStudentForm("close");
                 }
-            }
-            catch (err) {
+            } catch (err) {
                 console.log(err);
             }
         }
-
     }, [auth]);
 
     return (
@@ -69,30 +74,26 @@ const Dashboard = () => {
                 <div className="session-list">
                     <h2>Your Sessions</h2>
                     <table>
-                        <thead><tr>
-                            <th>Name</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Duration</th>
-                            <th>Location</th>
-                            <th>Radius</th>
-                            <th>Action</th>
-                        </tr></thead>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Duration</th>
+                                <th>Distance</th>
+                            </tr>
+                        </thead>
                         {sessionList.length > 0 ? (
                             sessionList.map((session, index) => {
                                 return (
                                     <tbody key={index}>
                                         <tr key={index + "0"} className="session">
                                             <th key={index + "2"}>{session.name}</th>
-                                            <th key={index + "3"}>{session.date.split('T')[0]}</th>
+                                            <th key={index + "3"}>{session.date.split("T")[0]}</th>
                                             <th key={index + "4"}>{session.time}</th>
                                             <th key={index + "5"}>{session.duration}</th>
-                                            <th key={index + "6"}>{session.location}</th>
-                                            <th key={index + "7"}>{session.radius}</th>
-                                            <th key={index + "8"}>
-                                                <button onClick={() => { }}>
-                                                    Details
-                                                </button>
+                                            <th key={index + "6"} className="distance" style={{ color: getDistance(session.distance, session.radius).color }}>
+                                                {getDistance(session.distance, session.radius).distance}
                                             </th>
                                         </tr>
                                     </tbody>
@@ -107,7 +108,8 @@ const Dashboard = () => {
                         )}
                         <tfoot></tfoot>
                     </table>
-                </div>)}
+                </div>
+            )}
             {isSessionDisplay && (
                 <div className="popup-overlay">
                     <StudentForm togglePopup={toggleStudentForm} />

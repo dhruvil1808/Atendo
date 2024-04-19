@@ -68,6 +68,7 @@ const StudentForm = ({ togglePopup }) => {
                             session_id: localStorage.getItem("session_id"),
                             teacher_email: localStorage.getItem("email"),
                             IP: IP,
+                            date: new Date().toISOString().split("T")[0],
                             Location: locationString,
                             student_email: auth,
                             image: image.data,

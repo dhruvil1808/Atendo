@@ -22,6 +22,7 @@ const userSchema = new schema(
                 IP: { type: String, required: true },
                 student_email: { type: String, required: true },
                 Location: { type: String, required: true },
+                distance: { type: String, required: true },
             }],
         }],
     },

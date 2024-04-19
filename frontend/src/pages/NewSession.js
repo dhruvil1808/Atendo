@@ -27,6 +27,8 @@ const NewSession = ({ togglePopup }) => {
 
         let name = e.target.name.value;
         let date = new Date();
+        //get the date in the format yyyy-mm-dd
+        date = date.toISOString().split("T")[0];
         let time = e.target.time.value;
         let duration = e.target.duration.value;
         let radius = e.target.radius.value;
