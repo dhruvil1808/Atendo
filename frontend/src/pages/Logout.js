@@ -12,11 +12,13 @@ const Logout = () => {
         localStorage.removeItem("name");
         localStorage.removeItem("pno");
         localStorage.removeItem("type");
+        localStorage.removeItem("email");
+        localStorage.removeItem("session_id");
 
         setTimeout(() => {
             navigate("/");
         }, 2000);
-    }, []);
+    });
 
     return (
         <div className='logout-main'>

@@ -1,14 +1,12 @@
 //create a new session component
 import React, { useState, useRef } from "react";
 import axios from "axios";
-import QRCode from "qrcode.react";
 import "../styles/NewSession.css";
 
 const StudentForm = ({ togglePopup }) => {
     //eslint-disable-next-line
     const [auth, setToken] = useState(localStorage.getItem("auth") || "");
     const [image, setImage] = useState({ preview: "", data: "" });
-    const [status, setStatus] = useState('')
     const [photoData, setPhotoData] = useState(""); // To store the captured photo data
     const videoRef = useRef(null);
 
@@ -84,15 +82,13 @@ const StudentForm = ({ togglePopup }) => {
                 student_email: auth,
                 image: image.data
             }
-            console.log(formData)
             try {
                 const response = await axios.post(
                     "http://localhost:5050/sessions/attend_session",
                     formData
                 );
-                console.log(response.data);
                 //replace the contents of the popup with the QR code
-                document.querySelector(".popup-inner").innerHTML = `<h5>Attendance Marked</h5>`;
+                document.querySelector(".popup-inner").innerHTML = `<h5>${response.data.message}</h5>`;
             } catch (err) {
                 console.error(err);
             }

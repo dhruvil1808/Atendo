@@ -12,7 +12,17 @@ const Dashboard = () => {
     const [isSessionDisplay, setSessionDisplay] = useState(false);
     const navigate = useNavigate();
 
-    function getSessionDetails() {
+    function getStudentSessions() {
+        axios.post("http://localhost:5050/sessions/getStudentSessions", {
+            email: auth,
+        })
+            .then((response) => {
+                console.log(response.data);
+                setSessionList(response.data.sessions);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     function toggleStudentForm() {
@@ -33,6 +43,7 @@ const Dashboard = () => {
             navigate("/login");
         }
         else {
+            getStudentSessions();
             document.querySelector(".logout").style.display = "block";
         }
     }, [auth]);

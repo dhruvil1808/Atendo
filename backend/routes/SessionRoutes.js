@@ -3,9 +3,6 @@ const router = Router();
 import { Teacher } from "../model/Teacher.js";
 import { Student } from "../model/Student.js";
 import querystring from "querystring";
-import upload from "../middleware/multer.js";
-import fs from "fs";
-import path from "path";
 
 function getQR(session_id, email) {
     let url = `http://localhost:3000/login?${querystring.stringify({
@@ -66,6 +63,7 @@ router.post("/getQR", async (req, res) => {
 router.post("/attend_session", async (req, res) => {
     let { session_id, teacher_email, regno, IP, student_email, Location, image } = req.body;
     try {
+        let present = false;
         const teacher = await Teacher.findOne({ email: teacher_email });
         let session_details = {};
         teacher.sessions.map((session) => {
@@ -80,24 +78,49 @@ router.post("/attend_session", async (req, res) => {
                     location: session.location,
                     radius: session.radius,
                 };
-                session.attendance.push({
-                    regno,
-                    image,
-                    IP,
-                    student_email,
-                    Location,
+                session.attendance.map((student) => {
+                    if (student.regno === regno || student.student_email === student_email) {
+                        present = true;
+                    }
                 });
+                if (!present) {
+                    session.attendance.push({
+                        regno,
+                        image,
+                        IP,
+                        student_email,
+                        Location,
+                    });
+                }
             }
         });
-        await Teacher.findOneAndUpdate(
-            { email: teacher_email },
-            { sessions: teacher.sessions }
-        );
-        const student = await Student.findOneAndUpdate(
-            { email: student_email },
-            { $push: { sessions: session_details } }
-        );
-        res.status(200).json({ message: "Attendance marked successfully" });
+        if (!present) {
+            await Teacher.findOneAndUpdate(
+                { email: teacher_email },
+                { sessions: teacher.sessions }
+            );
+            const student = await Student.findOneAndUpdate(
+                { email: student_email },
+                { $push: { sessions: session_details } }
+            );
+            res.status(200).json({ message: "Attendance marked successfully" });
+        }
+        else {
+            res.status(200).json({ message: "Attendance already marked" });
+        }
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+});
+
+//get student sessions
+router.post("/getStudentSessions", async (req, res) => {
+    try {
+        const student = await Student.findOne({
+            email: req
+                .body.email
+        });
+        res.status(200).json({ sessions: student.sessions });
     } catch (err) {
         res.status(400).json({ message: err.message });
     }

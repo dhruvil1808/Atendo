@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import QRCode from 'qrcode.react';
-import { Buffer } from 'buffer';
 import "../styles/SessionDetails.css";
 
 const SessionDetails = (props) => {
@@ -26,6 +25,11 @@ const SessionDetails = (props) => {
         let imageWindow = window.open("", "_blank");
         imageWindow.document.write(`<img src=${image} alt="student" width="50%" />`);
     };
+
+    function checkStudentData() {
+
+        //
+    }
 
 
     const copyQR = () => {
