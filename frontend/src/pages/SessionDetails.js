@@ -26,9 +26,39 @@ const SessionDetails = (props) => {
         imageWindow.document.write(`<img src=${image} alt="student" width="50%" />`);
     };
 
-    function checkStudentData() {
 
-        //
+    function haversineDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371000; // Radius of the Earth in meters
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c; // Distance in meters
+        return distance;
+    }
+
+    function checkStudentDistance(studentLocation) {
+
+        const sessionLocation = props.currentSession[0].location;
+        const sessionRadius = props.currentSession[0].radius;
+        const sessionLocationArray = sessionLocation.split(",");
+        const sessionLat = parseFloat(sessionLocationArray[0]);
+        const sessionLon = parseFloat(sessionLocationArray[1]);
+        const studentLocationArray = studentLocation.split(",");
+        const studentLat = parseFloat(studentLocationArray[0]);
+        const studentLon = parseFloat(studentLocationArray[1]);
+
+        const distance = haversineDistance(sessionLat, sessionLon, studentLat, studentLon);
+        if (distance <= props.currentSession[0].radius) {
+            document.querySelector(".distance").style.color = "green";
+        } else {
+            document.querySelector(".distance").style.color = "red";
+        }
+        return distance.toFixed(2) + " meters";
+
     }
 
 
@@ -53,6 +83,7 @@ const SessionDetails = (props) => {
                         <p>Session Time: {props.currentSession[0].time}</p>
                         <p>Session Duration: {props.currentSession[0].duration}</p>
                         <p>Session Location: {props.currentSession[0].location}</p>
+                        <p>Session Radius: {props.currentSession[0].radius} meters</p>
                     </div>
                     <div className="qr-code">
                         <QRCode value={qr} onClick={copyQR} size={200} />
@@ -68,6 +99,7 @@ const SessionDetails = (props) => {
                                 <th>IP</th>
                                 <th>Email</th>
                                 <th>Location</th>
+                                <th>Distance</th>
                                 <th>Image</th>
                             </tr>
                         </thead>
@@ -79,6 +111,7 @@ const SessionDetails = (props) => {
                                         <td>{student.IP}</td>
                                         <td>{student.student_email}</td>
                                         <td>{student.Location}</td>
+                                        <td className="distance">{checkStudentDistance(student.Location)}</td>
                                         {student.image !== undefined ? (
                                             <td>
                                                 <img
