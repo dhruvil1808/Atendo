@@ -20,6 +20,7 @@ const userSchema = new schema(
                 regno: { type: String, required: true },
                 image: { type: String, required: true },
                 IP: { type: String, required: true },
+                date: { type: Date, required: true },
                 student_email: { type: String, required: true },
                 Location: { type: String, required: true },
                 distance: { type: String, required: true },

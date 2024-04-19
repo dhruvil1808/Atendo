@@ -9,7 +9,6 @@ const StudentForm = ({ togglePopup }) => {
     const [image, setImage] = useState({ preview: "", data: "" });
     const [photoData, setPhotoData] = useState(""); // To store the captured photo data
     const videoRef = useRef(null);
-    const [location, setLocation] = useState("");
 
     const constraints = {
         video: true,
@@ -54,7 +53,6 @@ const StudentForm = ({ togglePopup }) => {
         //get user IP address
         let res = await axios.get("https://api.ipify.org/?format=json");
         let IP = res.data.ip;
-        let location = "";
         if (navigator.geolocation) {
             console.log("Geolocation is supported!");
             navigator.geolocation.getCurrentPosition(

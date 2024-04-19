@@ -71,6 +71,7 @@ const SessionDetails = (props) => {
                             <tr>
                                 <th>Reg No</th>
                                 <th>IP</th>
+                                <th>Date</th>
                                 <th>Email</th>
                                 <th>Location</th>
                                 <th>Distance</th>
@@ -83,6 +84,7 @@ const SessionDetails = (props) => {
                                     <tr key={index}>
                                         <td>{student.regno}</td>
                                         <td>{student.IP}</td>
+                                        <td>{student.date}</td>
                                         <td>{student.student_email}</td>
                                         <td>{student.Location}</td>
                                         <th key={index + "6"} className="distance" style={{ color: getDistance(student.distance, props.currentSession[0].radius).color }}>

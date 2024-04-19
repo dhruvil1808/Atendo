@@ -2,9 +2,13 @@ import React from 'react';
 import { useState } from 'react';
 import '../styles/UserDetails.css';
 
-const UserDetails = ({ user, onClick }) => {
+const UserDetails = ({ user }) => {
     //eslint-disable-next-line
     const [showUserDetails, setShowUserDetails] = useState(false);
+
+    const onClick = () => {
+        setShowUserDetails(!showUserDetails);
+    }
 
     return (
         <div className="user-details" onClick={onClick}>
