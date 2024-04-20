@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../styles/Signup.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { SHA256 } from 'crypto-js';
 
 const Signup = () => {
     // eslint-disable-next-line
@@ -9,6 +10,10 @@ const Signup = () => {
     // eslint-disable-next-line
     const [token, setToken] = useState(localStorage.getItem("auth") || "");
     const navigate = useNavigate();
+
+    function computeHash(input) {
+        return SHA256(input).toString();
+    }
 
     const handleRegisterSubmit = async (e) => {
         e.preventDefault();
@@ -23,6 +28,9 @@ const Signup = () => {
         if (password.length > 0 && confirmPassword.length > 0) {
 
             if (password === confirmPassword) {
+                password = computeHash(password);
+                //add email to the password to make it unique
+                password = computeHash(email + password);
                 const formData = {
                     name,
                     email,
@@ -44,6 +52,7 @@ const Signup = () => {
             alert("Please fill all the fields");
         }
     }
+
 
     const toggleOne = () => {
         document.querySelector(".first-slide").style.display = "block";

@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import image512 from "../assets/logo512.png";
 import image192 from "../assets/logo192.png";
+import { SHA256 } from 'crypto-js';
 const queryParameters = new URLSearchParams(window.location.search);
 
 
@@ -13,6 +14,10 @@ const Login = () => {
     // eslint-disable-next-line
     const [auth, setToken] = useState(localStorage.getItem("auth") || "");
     const navigate = useNavigate();
+
+    function computeHash(input) {
+        return SHA256(input).toString();
+    }
 
     const handleLoginSubmit = async (e) => {
         let session_id = ""
@@ -31,6 +36,9 @@ const Login = () => {
         let password = e.target.password.value;
 
         if (email.length > 0 && password.length > 0) {
+            password = computeHash(password);
+            //add email to the password to make it unique
+            password = computeHash(email + password);
             const formData = {
                 email,
                 password,

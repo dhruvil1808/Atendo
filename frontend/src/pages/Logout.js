@@ -17,13 +17,13 @@ const Logout = () => {
 
         setTimeout(() => {
             navigate("/");
-        }, 2000);
+        }, 1000);
     });
 
     return (
         <div className='logout-main'>
             <h1>Logout Successfull!</h1>
-            <p>You will be redirected to the landing page in 2 seconds...</p>
+            <p>You will be redirected to the landing page in 1 second...</p>
         </div>
     )
 }

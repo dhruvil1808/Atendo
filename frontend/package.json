@@ -9,6 +9,7 @@
     "axios": "^1.6.8",
     "buffer": "^6.0.3",
     "buffers": "^0.1.1",
+    "crypto-js": "^4.2.0",
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
