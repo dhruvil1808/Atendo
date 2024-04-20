@@ -6,7 +6,7 @@ import "../styles/NewSession.css";
 const StudentForm = ({ togglePopup }) => {
     //eslint-disable-next-line
     const [auth, setToken] = useState(localStorage.getItem("auth") || "");
-    const [image, setImage] = useState({ preview: "", data: "" });
+    const [image, setImage] = useState({ contentType: "", data: "" });
     const [photoData, setPhotoData] = useState(""); // To store the captured photo data
     const videoRef = useRef(null);
 
@@ -30,16 +30,17 @@ const StudentForm = ({ togglePopup }) => {
         tracks.forEach((track) => track.stop());
         videoRef.current.srcObject = null;
     };
-    const capturePhoto = () => {
+    const capturePhoto = async () => {
         const canvas = document.createElement("canvas");
         canvas.width = videoRef.current.videoWidth;
         canvas.height = videoRef.current.videoHeight;
-        canvas
-            .getContext("2d")
-            .drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+        canvas.getContext("2d").drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+
         const photoDataUrl = canvas.toDataURL("image/png");
+
+        setImage(await fetch(photoDataUrl).then(res => res.blob()));
+
         setPhotoData(photoDataUrl);
-        setImage({ preview: photoDataUrl, data: photoDataUrl });
         stopCamera();
     };
     const ResetCamera = () => {
@@ -69,13 +70,18 @@ const StudentForm = ({ togglePopup }) => {
                             date: new Date().toISOString().split("T")[0],
                             Location: locationString,
                             student_email: auth,
-                            image: image.data,
+                            image: image,
                         };
                         try {
                             console.log("sending data to server");
                             const response = await axios.post(
                                 "http://localhost:5050/sessions/attend_session",
                                 formData
+                                , {
+                                    headers: {
+                                        "Content-Type": "multipart/form-data",
+                                    },
+                                }
                             );
                             //replace the contents of the popup with the QR code
                             document.querySelector(

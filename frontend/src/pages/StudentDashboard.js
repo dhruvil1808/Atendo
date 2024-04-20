@@ -54,10 +54,7 @@ const Dashboard = () => {
             try {
                 localStorage.setItem("session_id", queryParameters.get("session_id"));
                 localStorage.setItem("email", queryParameters.get("email"));
-                if (
-                    queryParameters.get("session_id") !== null &&
-                    queryParameters.get("email") !== null
-                ) {
+                if (queryParameters.get("session_id") !== null && queryParameters.get("email") !== null) {
                     toggleStudentForm("open");
                 } else {
                     toggleStudentForm("close");
@@ -81,6 +78,7 @@ const Dashboard = () => {
                                 <th>Time</th>
                                 <th>Duration</th>
                                 <th>Distance</th>
+                                <th>Image</th>
                             </tr>
                         </thead>
                         {sessionList.length > 0 ? (
@@ -94,6 +92,9 @@ const Dashboard = () => {
                                             <th key={index + "5"}>{session.duration}</th>
                                             <th key={index + "6"} className="distance" style={{ color: getDistance(session.distance, session.radius).color }}>
                                                 {getDistance(session.distance, session.radius).distance}
+                                            </th>
+                                            <th key={index + "7"}>
+                                                <img src={session.image} alt="session" width={200} />
                                             </th>
                                         </tr>
                                     </tbody>

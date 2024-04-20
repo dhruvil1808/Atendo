@@ -27,8 +27,7 @@ const Login = () => {
             teacher = queryParameters.get("email");
         }
         catch (err) {
-
-            console.log(err);
+            console.log("No query parameters")
         }
 
         e.preventDefault();
@@ -37,7 +36,6 @@ const Login = () => {
 
         if (email.length > 0 && password.length > 0) {
             password = computeHash(password);
-            //add email to the password to make it unique
             password = computeHash(email + password);
             const formData = {
                 email,
@@ -68,7 +66,6 @@ const Login = () => {
             }
         } else {
             alert("Please fill all the fields");
-            //clear the form
             e.target.email.value = "";
             e.target.password.value = "";
         }
