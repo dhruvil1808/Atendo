@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
+import querystring from "querystring";
 import { Teacher } from "../model/Teacher.js";
 import { Student } from "../model/Student.js";
-import querystring from "querystring";
 import uploadImage from "../middleware/Cloudinary.js";
 
 function getQR(session_id, email) {

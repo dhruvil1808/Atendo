@@ -1,8 +1,8 @@
-import cloudinary from "cloudinary";
 import dotenv from "dotenv";
-import fs from "fs";
-import path from "path";
 dotenv.config();
+import cloudinary from "cloudinary";
+import path from "path";
+import fs from "fs";
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,

@@ -1,9 +1,9 @@
-import { Student } from "../model/Student.js";
-import { Teacher } from "../model/Teacher.js";
-import nodemailer from "nodemailer";
-import JWT from "../middleware/JWT.js";
 import dotenv from "dotenv";
 dotenv.config();
+import nodemailer from "nodemailer";
+import { Student } from "../model/Student.js";
+import { Teacher } from "../model/Teacher.js";
+import JWT from "../middleware/JWT.js";
 
 //login
 async function Login(req, res) {
