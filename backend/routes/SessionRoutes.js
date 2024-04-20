@@ -25,9 +25,7 @@ var storage = multer.diskStorage({
         cb(null, file.fieldname + '-' + Date.now())
     }
 });
-
 var upload = multer({ storage: storage });
-
 
 function getQR(session_id, email) {
     let url = `http://localhost:3000/login?${querystring.stringify({
@@ -147,6 +145,7 @@ router.post("/attend_session", upload.single('image'), async (req, res) => {
                     }
                 });
                 if (!present) {
+                    res.status(200).json({ message: "Attendance marked successfully" });
                     await uploadImage(imageName).then((result) => {
                         session_details = {
                             session_id: session.session_id,
@@ -177,7 +176,6 @@ router.post("/attend_session", upload.single('image'), async (req, res) => {
                         { email: student_email },
                         { $push: { sessions: session_details } }
                     );
-                    res.status(200).json({ message: "Attendance marked successfully" });
                 }
             }
         });
