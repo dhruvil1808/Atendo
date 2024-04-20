@@ -1,7 +1,7 @@
 import { Teacher } from "../model/Teacher.js";
 import { Student } from "../model/Student.js";
 import querystring from "querystring";
-import uploadImage from "../middleware/cloudinary.js";
+import uploadImage from "../middleware/Cloudinary.js";
 
 function getQR(session_id, email) {
     let url = `http://localhost:3000/login?${querystring.stringify({
