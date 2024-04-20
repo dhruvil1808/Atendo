@@ -3,6 +3,31 @@ const router = Router();
 import { Teacher } from "../model/Teacher.js";
 import { Student } from "../model/Student.js";
 import querystring from "querystring";
+import multer from "multer";
+import fs from "fs";
+import path from "path";
+import cloudinary from "cloudinary";
+import dotenv from "dotenv";
+dotenv.config();
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './public/uploads/')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now())
+    }
+});
+
+var upload = multer({ storage: storage });
+
 
 function getQR(session_id, email) {
     let url = `http://localhost:3000/login?${querystring.stringify({
@@ -40,8 +65,20 @@ function checkStudentDistance(Location1, Location2) {
         locationLat2,
         locationLon2
     );
-
     return distance.toFixed(2);
+}
+
+async function uploadImage(imageName) {
+    let imagePath = path.join(`./public/uploads/${imageName}`);
+    const result = await cloudinary.uploader.upload(imagePath);
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    fs.unlink(`./public/uploads/${imageName}`, (err) => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+    });
+    return result.url;
 }
 
 
@@ -93,56 +130,58 @@ router.post("/getQR", async (req, res) => {
 });
 
 //attend session
-router.post("/attend_session", async (req, res) => {
-    let { session_id, teacher_email, regno, IP, student_email, Location, image, date } = req.body;
+router.post("/attend_session", upload.single('image'), async (req, res) => {
+    let { session_id, teacher_email, regno, IP, student_email, Location, date } = req.body;
+    let imageName = req.file.filename;
+
     try {
         let present = false;
         const teacher = await Teacher.findOne({ email: teacher_email });
         let session_details = {};
-        teacher.sessions.map((session) => {
+        teacher.sessions.map(async (session) => {
             if (session.session_id === session_id) {
-                //find distance
                 let distance = checkStudentDistance(Location, session.location);
-                session_details = {
-                    session_id: session.session_id,
-                    teacher_email: teacher.email,
-                    name: session.name,
-                    date: session.date,
-                    time: session.time,
-                    duration: session.duration,
-                    distance: distance,
-                    radius: session.radius,
-                };
                 session.attendance.map((student) => {
                     if (student.regno === regno || student.student_email === student_email) {
                         present = true;
                     }
                 });
                 if (!present) {
-                    session.attendance.push({
-                        regno,
-                        image,
-                        date,
-                        IP,
-                        student_email,
-                        Location,
-                        distance,
+                    await uploadImage(imageName).then((result) => {
+                        session_details = {
+                            session_id: session.session_id,
+                            teacher_email: teacher.email,
+                            name: session.name,
+                            date: session.date,
+                            time: session.time,
+                            duration: session.duration,
+                            distance: distance,
+                            radius: session.radius,
+                            image: result
+                        };
+                        session.attendance.push({
+                            regno,
+                            image: result,
+                            date,
+                            IP,
+                            student_email,
+                            Location,
+                            distance,
+                        });
                     });
+                    await Teacher.findOneAndUpdate(
+                        { email: teacher_email },
+                        { sessions: teacher.sessions }
+                    );
+                    await Student.findOneAndUpdate(
+                        { email: student_email },
+                        { $push: { sessions: session_details } }
+                    );
+                    res.status(200).json({ message: "Attendance marked successfully" });
                 }
             }
         });
-        if (!present) {
-            await Teacher.findOneAndUpdate(
-                { email: teacher_email },
-                { sessions: teacher.sessions }
-            );
-            const student = await Student.findOneAndUpdate(
-                { email: student_email },
-                { $push: { sessions: session_details } }
-            );
-            res.status(200).json({ message: "Attendance marked successfully" });
-        }
-        else {
+        if (present) {
             res.status(200).json({ message: "Attendance already marked" });
         }
     } catch (err) {

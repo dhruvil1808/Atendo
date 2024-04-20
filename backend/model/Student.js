@@ -18,6 +18,7 @@ const userSchema = new schema(
                 distance: { type: String, required: true },
                 radius: { type: String, required: true },
                 student_location: { type: String, required: true },
+                image: { type: String, required: true },
             },
         ],
     },
