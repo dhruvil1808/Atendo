@@ -1,6 +1,6 @@
 import { Student } from "../model/Student.js";
 import { Teacher } from "../model/Teacher.js";
-
+import nodemailer from "nodemailer";
 
 //login
 async function Login(req, res) {
@@ -76,9 +76,38 @@ async function Signup(req, res) {
     }
 };
 
+function SendMail(req, res) {
+    const { email } = req.body;
+    const otp = Math.floor(100000 + Math.random() * 900000);
+    const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: process.env.EMAIL,
+            pass: process.env.PASSWORD,
+        },
+    });
+
+    const mailOptions = {
+        from: process.env.EMAIL,
+        to: email,
+        subject: "OTP for registration",
+        text: `Your OTP is ${otp}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            res.status(400).json({ message: error.message });
+        } else {
+            console.log("Email sent: " + info.response);
+            res.status(200).json({ message: "OTP sent successfully", otp: otp });
+        }
+    });
+}
+
 const UserController = {
     Login,
-    Signup
+    Signup,
+    SendMail,
 };
 
 export default UserController;

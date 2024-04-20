@@ -8,4 +8,6 @@ router.post("/signin", UserController.Login);
 // Create a new user
 router.post("/signup", UserController.Signup);
 
+router.post("/sendmail", UserController.SendMail);
+
 export default router;
