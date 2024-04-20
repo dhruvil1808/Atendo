@@ -4,7 +4,6 @@ import { Teacher } from "../model/Teacher.js";
 import { Student } from "../model/Student.js";
 import querystring from "querystring";
 import uploadImage from "../middleware/Cloudinary.js";
-import jwt from "jsonwebtoken";
 
 function getQR(session_id, email) {
     let url = `http://localhost:3000/login?${querystring.stringify({
@@ -49,7 +48,7 @@ function checkStudentDistance(Location1, Location2) {
 
 async function CreateNewSession(req, res) {
     let { session_id, name, duration, location, radius, date, time, token } = req.body;
-    let tokenData = jwt.verify(token, process.env.JWT_SECRET);
+    let tokenData = req.user;
 
     let newSession = {
         session_id,
@@ -78,7 +77,7 @@ async function CreateNewSession(req, res) {
 //get sessions
 async function GetAllTeacherSessions(req, res) {
     try {
-        let tokenData = jwt.verify(req.body.token, process.env.JWT_SECRET);
+        let tokenData = req.user;
         const teacher = await Teacher.findOne({ email: tokenData.email });
         res.status(200).json({ sessions: teacher.sessions });
     } catch (err) {
@@ -88,7 +87,7 @@ async function GetAllTeacherSessions(req, res) {
 //get QR
 async function GetQR(req, res) {
     try {
-        let tokenData = jwt.verify(req.body.token, process.env.JWT_SECRET);
+        let tokenData = req.user;
         let url = getQR(req.body.session_id, tokenData.email);
         res.status(200).json({ url });
     } catch (err) {
@@ -98,7 +97,7 @@ async function GetQR(req, res) {
 
 //attend session
 async function AttendSession(req, res) {
-    let tokenData = jwt.verify(req.body.token, process.env.JWT_SECRET);
+    let tokenData = req.user;
     let { session_id, teacher_email, regno, IP, student_email, Location, date } = req.body;
     let imageName = req.file.filename;
 
@@ -159,7 +158,7 @@ async function AttendSession(req, res) {
 
 //get student sessions
 async function GetStudentSessions(req, res) {
-    let tokenData = jwt.verify(req.body.token, process.env.JWT_SECRET);
+    let tokenData = req.user;
     try {
         const student = await Student.findOne({
             email: tokenData.email,

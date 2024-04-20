@@ -52,7 +52,10 @@ const StudentForm = ({ togglePopup }) => {
         e.preventDefault();
         let regno = e.target.regno.value;
         //get user IP address
-        let res = await axios.get("https://api.ipify.org/?format=json");
+        axios.defaults.withCredentials = false;
+        const res = await axios.get("https://api64.ipify.org?format=json");
+        axios.defaults.withCredentials = true;
+        //
         let IP = res.data.ip;
         if (navigator.geolocation) {
             console.log("Geolocation is supported!");

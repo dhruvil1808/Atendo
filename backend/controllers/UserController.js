@@ -1,7 +1,9 @@
 import { Student } from "../model/Student.js";
 import { Teacher } from "../model/Teacher.js";
 import nodemailer from "nodemailer";
-import jwt from "jsonwebtoken";
+import JWT from "../middleware/JWT.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 //login
 async function Login(req, res) {
@@ -16,14 +18,12 @@ async function Login(req, res) {
 
     if (user) {
         if (user.password === password) {
-            const token = jwt.sign({ email: email }, process.env.JWT_SECRET);
+            const token = JWT.generateToken({ email: user.email });
+            user.type = type;
             res.cookie("token", token, {
                 httpOnly: true,
-                secure: true,
-                sameSite: "none",
-            });
-            user.type = type;
-            res.send({ "user": user, "type": type, token: token });
+                secure: process.env.NODE_ENV === "production"
+            }).status(200).json({ "user": user, "type": type, token: token });
         } else {
             res.status(400).json({ message: "Invalid email or password" });
         }

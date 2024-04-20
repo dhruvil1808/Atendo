@@ -7,6 +7,8 @@ import image192 from "../assets/logo192.png";
 import { SHA256 } from 'crypto-js';
 const queryParameters = new URLSearchParams(window.location.search);
 
+axios.defaults.withCredentials = true;
+
 
 const Login = () => {
     // eslint-disable-next-line
@@ -46,6 +48,7 @@ const Login = () => {
                     "http://localhost:5050/users/signin",
                     formData
                 );
+                console.log(response.cookie);
                 let user = response.data.user;
                 let type = response.data.type;
                 let token = response.data.token;

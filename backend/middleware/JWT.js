@@ -2,9 +2,8 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 
-export function verifyToken(req, res, next) {
-    console.log(req);
-    const token = req.header("token");
+function verifyToken(req, res, next) {
+    const token = req.cookies.token;
     if (!token) return res.status(401).send("Access Denied");
 
     try {
@@ -16,4 +15,15 @@ export function verifyToken(req, res, next) {
     }
 }
 
-export default verifyToken;
+function generateToken(data) {
+    return jwt.sign(data, process.env.JWT_SECRET, { expiresIn: "5h" });
+}
+
+const JWT = {
+    verifyToken,
+    generateToken
+};
+
+
+
+export default JWT;

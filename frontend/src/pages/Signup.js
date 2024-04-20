@@ -93,7 +93,7 @@ const Signup = () => {
         if (otp.length === 0) {
             alert("Please Enter OTP");
         } else {
-            if (otp == SaveOTP) {
+            if (otp === SaveOTP) {
                 document.querySelector(".first-slide").style.display = "none";
                 document.querySelector(".second-slide").style.display = "none";
                 document.querySelector(".third-slide").style.display = "block";

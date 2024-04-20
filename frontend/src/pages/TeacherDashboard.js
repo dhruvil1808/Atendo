@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import NewSession from "./NewSession";
 import SessionDetails from "./SessionDetails";
 
+axios.defaults.withCredentials = true;
+
 const TeacherDashboard = () => {
     //eslint-disable-next-line
     const [token, setToken] = useState(localStorage.getItem("token") || "");
