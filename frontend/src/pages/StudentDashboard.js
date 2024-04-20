@@ -54,10 +54,7 @@ const Dashboard = () => {
             try {
                 localStorage.setItem("session_id", queryParameters.get("session_id"));
                 localStorage.setItem("email", queryParameters.get("email"));
-                if (
-                    queryParameters.get("session_id") !== null &&
-                    queryParameters.get("email") !== null
-                ) {
+                if (queryParameters.get("session_id") !== null && queryParameters.get("email") !== null) {
                     toggleStudentForm("open");
                 } else {
                     toggleStudentForm("close");
