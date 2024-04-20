@@ -10,7 +10,7 @@ const Signup = () => {
     // eslint-disable-next-line
     const [showPassword, setShowPassword] = useState(false);
     // eslint-disable-next-line
-    const [token, setToken] = useState(localStorage.getItem("auth") || "");
+    const [token, setToken] = useState(localStorage.getItem("token") || "");
     const [SaveOTP, setOtp] = useState(
         Math.floor(100000 + Math.random() * 900000) || 0
     );

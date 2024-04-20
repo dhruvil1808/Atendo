@@ -5,7 +5,7 @@ import "../styles/NewSession.css";
 
 const StudentForm = ({ togglePopup }) => {
     //eslint-disable-next-line
-    const [auth, setToken] = useState(localStorage.getItem("auth") || "");
+    const [token, setToken] = useState(localStorage.getItem("token") || "");
     const [image, setImage] = useState({ contentType: "", data: "" });
     const [photoData, setPhotoData] = useState(""); // To store the captured photo data
     const videoRef = useRef(null);
@@ -63,13 +63,14 @@ const StudentForm = ({ togglePopup }) => {
 
                     if (regno.length > 0) {
                         const formData = {
+                            token: token,
                             regno: regno,
                             session_id: localStorage.getItem("session_id"),
-                            teacher_email: localStorage.getItem("email"),
+                            teacher_email: localStorage.getItem("teacher_email"),
                             IP: IP,
                             date: new Date().toISOString().split("T")[0],
                             Location: locationString,
-                            student_email: auth,
+                            student_email: localStorage.getItem("email"),
                             image: image,
                         };
                         try {

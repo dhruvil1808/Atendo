@@ -7,23 +7,20 @@ const queryParameters = new URLSearchParams(window.location.search);
 
 const Dashboard = () => {
     //eslint-disable-next-line
-    const [auth, setToken] = useState(localStorage.getItem("auth") || "");
+    const [token, setToken] = useState(localStorage.getItem("token") || "");
     // eslint-disable-next-line
     const [sessionList, setSessionList] = useState([]);
     const [isSessionDisplay, setSessionDisplay] = useState(false);
     const navigate = useNavigate();
 
     function getStudentSessions() {
-        axios
-            .post("http://localhost:5050/sessions/getStudentSessions", {
-                email: auth,
-            })
-            .then((response) => {
-                setSessionList(response.data.sessions);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        axios.post("http://localhost:5050/sessions/getStudentSessions", {
+            token: token,
+        }).then((response) => {
+            setSessionList(response.data.sessions);
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 
     function toggleStudentForm(action) {
@@ -31,7 +28,7 @@ const Dashboard = () => {
             setSessionDisplay(true);
         } else {
             localStorage.removeItem("session_id");
-            localStorage.removeItem("email");
+            localStorage.removeItem("teacher_email");
             setSessionDisplay(false);
             navigate("/student-dashboard");
         }
@@ -45,25 +42,26 @@ const Dashboard = () => {
     }
 
     useEffect(() => {
-        console.log("useEffect2");
-        if (auth === "" || auth === undefined) {
+        if (token === "" || token === undefined) {
             navigate("/login");
         } else {
             getStudentSessions();
             document.querySelector(".logout").style.display = "block";
             try {
-                localStorage.setItem("session_id", queryParameters.get("session_id"));
-                localStorage.setItem("email", queryParameters.get("email"));
                 if (queryParameters.get("session_id") !== null && queryParameters.get("email") !== null) {
-                    toggleStudentForm("open");
-                } else {
+                    localStorage.setItem("session_id", queryParameters.get("session_id"));
+                    localStorage.setItem("teacher_email", queryParameters.get("email"));
+                }
+                if (localStorage.getItem("session_id") == null && localStorage.getItem("teacher_email") == null) {
                     toggleStudentForm("close");
+                } else {
+                    toggleStudentForm("open");
                 }
             } catch (err) {
                 console.log(err);
             }
         }
-    }, [auth]);
+    }, [token]);
 
     return (
         <div className="dashboard-main">

@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 import NewSession from "./NewSession";
 import SessionDetails from "./SessionDetails";
 
-const Dashboard = () => {
+const TeacherDashboard = () => {
     //eslint-disable-next-line
-    const [auth, setToken] = useState(localStorage.getItem("auth") || "");
+    const [token, setToken] = useState(localStorage.getItem("token") || "");
     const [sessionList, setSessionList] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
     const [isSessionDisplay, setSessionDisplay] = useState(false);
@@ -20,7 +20,7 @@ const Dashboard = () => {
             const response = await axios.post(
                 "http://localhost:5050/sessions/getSessions",
                 {
-                    email: auth,
+                    token: token,
                 }
             );
             setSessionList(response.data.sessions);
@@ -43,14 +43,14 @@ const Dashboard = () => {
         setIsOpen(!isOpen);
     };
     useEffect(() => {
-        if (auth === "" || auth === undefined) {
+        if (token === "" || token === undefined) {
             navigate("/login");
         }
         else {
             updateList();
             document.querySelector(".logout").style.display = "block";
         }
-    }, [auth]);
+    }, [token]);
 
     return (
         <div className="dashboard-main">
@@ -113,4 +113,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default TeacherDashboard;

@@ -12,7 +12,7 @@ const Login = () => {
     // eslint-disable-next-line
     const [showPassword, setShowPassword] = useState(false);
     // eslint-disable-next-line
-    const [auth, setToken] = useState(localStorage.getItem("auth") || "");
+    const [token, setToken] = useState(localStorage.getItem("token") || "");
     const navigate = useNavigate();
 
     function computeHash(input) {
@@ -48,13 +48,20 @@ const Login = () => {
                 );
                 let user = response.data.user;
                 let type = response.data.type;
-                localStorage.setItem('auth', user.email);
+                let token = response.data.token;
+                localStorage.setItem('email', user.email);
                 localStorage.setItem('name', user.name);
                 localStorage.setItem('pno', user.pno);
                 localStorage.setItem('dob', user.dob);
                 localStorage.setItem('type', type);
+                localStorage.setItem('token', token);
                 if (response.data.type === "student") {
-                    navigate("/student-dashboard?session_id=" + session_id + "&email=" + teacher);
+                    if (session_id !== "" && teacher !== "") {
+                        navigate("/student-dashboard?session_id=" + session_id + "&email=" + teacher);
+                    }
+                    else {
+                        navigate("/student-dashboard");
+                    }
                 }
                 else {
                     navigate("/teacher-dashboard");
@@ -72,10 +79,28 @@ const Login = () => {
     };
 
     useEffect(() => {
-        if (auth !== "" && auth !== undefined) {
-            navigate("/student-dashboard");
+        let session_id = ""
+        let teacher = ""
+        try {
+            session_id = queryParameters.get("session_id");
+            teacher = queryParameters.get("email");
         }
-    }, [auth]);
+        catch (err) {
+            console.log("No query parameters")
+        }
+        if (token !== "" && token !== undefined) {
+            if (localStorage.getItem("type") === "teacher") {
+                navigate("/teacher-dashboard");
+            } else {
+                if (session_id !== "" && teacher !== "") {
+                    navigate("/student-dashboard?session_id=" + session_id + "&email=" + teacher);
+                }
+                else {
+                    navigate("/student-dashboard");
+                }
+            }
+        }
+    }, [token]);
 
     return (
         <div className="login-main">

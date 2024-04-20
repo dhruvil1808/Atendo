@@ -1,4 +1,4 @@
-export { default as Dashboard } from "./Dashboard";
+export { default as TeacherDashboard } from "./TeacherDashboard";
 export { default as HomeLayout } from "./HomeLayout";
 export { default as Landing } from "./Landing";
 export { default as Login } from "./Login";

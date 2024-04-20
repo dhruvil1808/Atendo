@@ -3,7 +3,6 @@ const router = Router();
 import upload from "../middleware/Multer.js";
 import SessionController from "../controllers/SessionController.js";
 
-
 //login
 router.post("/create", SessionController.CreateNewSession);
 //get sessions

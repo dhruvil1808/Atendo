@@ -6,7 +6,7 @@ import "../styles/NewSession.css";
 
 const NewSession = ({ togglePopup }) => {
     //eslint-disable-next-line
-    const [auth, setToken] = useState(localStorage.getItem("auth") || "");
+    const [token, setToken] = useState(localStorage.getItem("token") || "");
     const [qrtoggle, setQrtoggle] = useState(false);
     const [qrData, setQrData] = useState("");
 
@@ -43,7 +43,7 @@ const NewSession = ({ togglePopup }) => {
                     location = locationString.length > 0 ? locationString : "0,0";
                     if (name.length > 0 && duration.length > 0) {
                         const formData = {
-                            email: auth,
+                            token,
                             session_id,
                             date,
                             time,
