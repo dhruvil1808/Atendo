@@ -1,32 +1,31 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from "react";
 import "../styles/Logout.css";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const Logout = () => {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  useEffect(() => {
+    localStorage.removeItem("email");
+    localStorage.removeItem("dob");
+    localStorage.removeItem("name");
+    localStorage.removeItem("pno");
+    localStorage.removeItem("type");
+    localStorage.removeItem("email");
+    localStorage.removeItem("session_id");
+    localStorage.removeItem("token");
 
-    useEffect(() => {
-        localStorage.removeItem("email");
-        localStorage.removeItem("dob");
-        localStorage.removeItem("name");
-        localStorage.removeItem("pno");
-        localStorage.removeItem("type");
-        localStorage.removeItem("email");
-        localStorage.removeItem("session_id");
-        localStorage.removeItem("token");
+    setTimeout(() => {
+      navigate("/");
+    }, 1000);
+  });
 
-        setTimeout(() => {
-            navigate("/");
-        }, 1000);
-    });
+  return (
+    <div className="logout-main">
+      <h1>Logout Successfull!</h1>
+      <p>You will be redirected to the landing page in 1 second...</p>
+    </div>
+  );
+};
 
-    return (
-        <div className='logout-main'>
-            <h1>Logout Successfull!</h1>
-            <p>You will be redirected to the landing page in 1 second...</p>
-        </div>
-    )
-}
-
-export default Logout
+export default Logout;
