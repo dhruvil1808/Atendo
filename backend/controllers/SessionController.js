@@ -45,7 +45,10 @@ function checkStudentDistance(Location1, Location2) {
 //make controller functions
 
 async function CreateNewSession(req, res) {
-  let { session_id, name, duration, location, radius, date, time } = req.body;
+  let { session_id, name, duration, location, radius, date, time, token } =
+    req.body;
+  let tokenData = jwt.verify(token, process.env.JWT_SECRET);
+
   let newSession = {
     session_id,
     date,
@@ -74,7 +77,8 @@ async function CreateNewSession(req, res) {
 //get sessions
 async function GetAllTeacherSessions(req, res) {
   try {
-    const teacher = await Teacher.findOne({ email: req.body.email });
+    let tokenData = jwt.verify(req.body.token, process.env.JWT_SECRET);
+    const teacher = await Teacher.findOne({ email: tokenData.email });
     res.status(200).json({ sessions: teacher.sessions });
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -83,7 +87,8 @@ async function GetAllTeacherSessions(req, res) {
 //get QR
 async function GetQR(req, res) {
   try {
-    let url = getQR(req.body.session_id, req.body.email);
+    let tokenData = jwt.verify(req.body.token, process.env.JWT_SECRET);
+    let url = getQR(req.body.session_id, tokenData.email);
     res.status(200).json({ url });
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -92,6 +97,7 @@ async function GetQR(req, res) {
 
 //attend session
 async function AttendSession(req, res) {
+  let tokenData = jwt.verify(req.body.token, process.env.JWT_SECRET);
   let { session_id, teacher_email, regno, IP, student_email, Location, date } =
     req.body;
   let imageName = req.file.filename;
@@ -130,7 +136,7 @@ async function AttendSession(req, res) {
               image: result,
               date,
               IP,
-              student_email,
+              student_email: tokenData.email,
               Location,
               distance,
             });
@@ -156,9 +162,10 @@ async function AttendSession(req, res) {
 
 //get student sessions
 async function GetStudentSessions(req, res) {
+  let tokenData = jwt.verify(req.body.token, process.env.JWT_SECRET);
   try {
     const student = await Student.findOne({
-      email: req.body.email,
+      email: tokenData.email,
     });
     res.status(200).json({ sessions: student.sessions });
   } catch (err) {

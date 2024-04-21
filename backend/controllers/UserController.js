@@ -15,8 +15,14 @@ async function Login(req, res) {
 
   if (user) {
     if (user.password === password) {
+      const token = jwt.sign({ email: email }, process.env.JWT_SECRET);
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      });
       user.type = type;
-      res.send({ user: user, type: type });
+      res.send({ user: user, type: type, token: token });
     } else {
       res.status(400).json({ message: "Invalid email or password" });
     }
@@ -42,13 +48,6 @@ async function Signup(req, res) {
         return res.status(400).json({ message: "User already exists" });
       } else {
         const newUser = await user.save();
-        // const token = jwt.sign({ email: email }, process.env.JWT_SECRET);
-
-        // res.cookie("token", token, {
-        //     httpOnly: true,
-        //     secure: true,
-        //     sameSite: "none",
-        // });
         res.status(201).json(newUser);
       }
     } catch (err) {

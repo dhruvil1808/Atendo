@@ -68,16 +68,13 @@ const Signup = () => {
         let name = document.querySelector("input[name='name']").value;
         let email = document.querySelector("input[name='email']").value;
 
-        await axios
-            .post("http://localhost:5050/users/sendmail", {
-                email: email,
-            })
-            .then((res) => {
-                setOtp(res.data.otp);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        await axios.post("http://localhost:5050/users/sendmail", {
+            email: email,
+        }).then((res) => {
+            setOtp(res.data.otp);
+        }).catch((err) => {
+            console.log(err);
+        });
 
         if (name.length === 0 || email.length === 0) {
             alert("Please fill all the fields");
@@ -96,7 +93,7 @@ const Signup = () => {
         if (otp.length === 0) {
             alert("Please Enter OTP");
         } else {
-            if (otp === SaveOTP) {
+            if (otp == SaveOTP) {
                 document.querySelector(".first-slide").style.display = "none";
                 document.querySelector(".second-slide").style.display = "none";
                 document.querySelector(".third-slide").style.display = "block";

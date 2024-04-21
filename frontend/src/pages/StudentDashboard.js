@@ -16,7 +16,7 @@ const Dashboard = () => {
   function getStudentSessions() {
     axios
       .post("http://localhost:5050/sessions/getStudentSessions", {
-        email: auth,
+        token: token,
       })
       .then((response) => {
         setSessionList(response.data.sessions);
@@ -45,28 +45,32 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    console.log("useEffect2");
-    if (auth === "" || auth === undefined) {
+    if (token === "" || token === undefined) {
       navigate("/login");
     } else {
       getStudentSessions();
       document.querySelector(".logout").style.display = "block";
       try {
-        localStorage.setItem("session_id", queryParameters.get("session_id"));
-        localStorage.setItem("email", queryParameters.get("email"));
         if (
           queryParameters.get("session_id") !== null &&
           queryParameters.get("email") !== null
         ) {
-          toggleStudentForm("open");
-        } else {
+          localStorage.setItem("session_id", queryParameters.get("session_id"));
+          localStorage.setItem("teacher_email", queryParameters.get("email"));
+        }
+        if (
+          localStorage.getItem("session_id") == null &&
+          localStorage.getItem("teacher_email") == null
+        ) {
           toggleStudentForm("close");
+        } else {
+          toggleStudentForm("open");
         }
       } catch (err) {
         console.log(err);
       }
     }
-  }, [auth]);
+  }, [token]);
 
   return (
     <div className="dashboard-main">
