@@ -32,7 +32,6 @@ const SessionDetails = (props) => {
   };
 
   function getDistance(distance, radius) {
-    console.log(distance, radius);
     return {
       distance,
       color: distance <= radius ? "green" : "red",

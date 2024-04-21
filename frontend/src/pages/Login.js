@@ -46,7 +46,6 @@ const Login = () => {
           "http://localhost:5050/users/signin",
           formData
         );
-        console.log(response.cookie);
         let user = response.data.user;
         let type = response.data.type;
         let token = response.data.token;
