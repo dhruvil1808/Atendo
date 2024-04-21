@@ -4,9 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import image512 from "../assets/logo512.png";
 import image192 from "../assets/logo192.png";
-import { SHA256 } from 'crypto-js';
+import { SHA256 } from "crypto-js";
 const queryParameters = new URLSearchParams(window.location.search);
-
 
 const Login = () => {
     // eslint-disable-next-line
@@ -20,14 +19,13 @@ const Login = () => {
     }
 
     const handleLoginSubmit = async (e) => {
-        let session_id = ""
-        let teacher = ""
+        let session_id = "";
+        let teacher = "";
         try {
             session_id = queryParameters.get("session_id");
             teacher = queryParameters.get("email");
-        }
-        catch (err) {
-            console.log("No query parameters")
+        } catch (err) {
+            console.log("No query parameters");
         }
 
         e.preventDefault();
@@ -49,21 +47,24 @@ const Login = () => {
                 let user = response.data.user;
                 let type = response.data.type;
                 let token = response.data.token;
-                localStorage.setItem('email', user.email);
-                localStorage.setItem('name', user.name);
-                localStorage.setItem('pno', user.pno);
-                localStorage.setItem('dob', user.dob);
-                localStorage.setItem('type', type);
-                localStorage.setItem('token', token);
+                localStorage.setItem("email", user.email);
+                localStorage.setItem("name", user.name);
+                localStorage.setItem("pno", user.pno);
+                localStorage.setItem("dob", user.dob);
+                localStorage.setItem("type", type);
+                localStorage.setItem("token", token);
                 if (response.data.type === "student") {
                     if (session_id !== "" && teacher !== "") {
-                        navigate("/student-dashboard?session_id=" + session_id + "&email=" + teacher);
-                    }
-                    else {
+                        navigate(
+                            "/student-dashboard?session_id=" +
+                            session_id +
+                            "&email=" +
+                            teacher
+                        );
+                    } else {
                         navigate("/student-dashboard");
                     }
-                }
-                else {
+                } else {
                     navigate("/teacher-dashboard");
                 }
             } catch (err) {
@@ -79,23 +80,23 @@ const Login = () => {
     };
 
     useEffect(() => {
-        let session_id = ""
-        let teacher = ""
+        let session_id = "";
+        let teacher = "";
         try {
             session_id = queryParameters.get("session_id");
             teacher = queryParameters.get("email");
-        }
-        catch (err) {
-            console.log("No query parameters")
+        } catch (err) {
+            console.log("No query parameters");
         }
         if (token !== "" && token !== undefined) {
             if (localStorage.getItem("type") === "teacher") {
                 navigate("/teacher-dashboard");
             } else {
                 if (session_id !== "" && teacher !== "") {
-                    navigate("/student-dashboard?session_id=" + session_id + "&email=" + teacher);
-                }
-                else {
+                    navigate(
+                        "/student-dashboard?session_id=" + session_id + "&email=" + teacher
+                    );
+                } else {
                     navigate("/student-dashboard");
                 }
             }
@@ -104,7 +105,7 @@ const Login = () => {
 
     return (
         <div className="login-main">
-            <div className="login-left" >
+            <div className="login-left">
                 <img alt="Full" src={image512} />
             </div>
             <div className="login-right">
@@ -124,9 +125,25 @@ const Login = () => {
                                     name="password"
                                 />
                                 {showPassword ? (
-                                    <button type="button" onClick={() => { setShowPassword(false) }} style={{ color: "white", padding: 0 }}>hide</button>
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setShowPassword(false);
+                                        }}
+                                        style={{ color: "white", padding: 0 }}
+                                    >
+                                        hide
+                                    </button>
                                 ) : (
-                                    <button type="button" onClick={() => { setShowPassword(true) }} style={{ color: "white", padding: 0 }}>see</button>
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setShowPassword(true);
+                                        }}
+                                        style={{ color: "white", padding: 0 }}
+                                    >
+                                        see
+                                    </button>
                                 )}
                             </div>
 

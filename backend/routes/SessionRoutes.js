@@ -10,7 +10,11 @@ router.post("/getSessions", SessionController.GetAllTeacherSessions);
 //get QR
 router.post("/getQR", SessionController.GetQR);
 //attend session
-router.post("/attend_session", upload.single('image'), SessionController.AttendSession);
+router.post(
+    "/attend_session",
+    upload.single("image"),
+    SessionController.AttendSession
+);
 //get student sessions
 router.post("/getStudentSessions", SessionController.GetStudentSessions);
 

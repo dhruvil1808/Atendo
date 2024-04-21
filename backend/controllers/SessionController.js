@@ -48,7 +48,8 @@ function checkStudentDistance(Location1, Location2) {
 //make controller functions
 
 async function CreateNewSession(req, res) {
-    let { session_id, name, duration, location, radius, date, time, token } = req.body;
+    let { session_id, name, duration, location, radius, date, time, token } =
+        req.body;
     let tokenData = jwt.verify(token, process.env.JWT_SECRET);
 
     let newSession = {
@@ -74,7 +75,7 @@ async function CreateNewSession(req, res) {
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
-};
+}
 //get sessions
 async function GetAllTeacherSessions(req, res) {
     try {
@@ -84,7 +85,7 @@ async function GetAllTeacherSessions(req, res) {
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
-};
+}
 //get QR
 async function GetQR(req, res) {
     try {
@@ -94,12 +95,13 @@ async function GetQR(req, res) {
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
-};
+}
 
 //attend session
 async function AttendSession(req, res) {
     let tokenData = jwt.verify(req.body.token, process.env.JWT_SECRET);
-    let { session_id, teacher_email, regno, IP, student_email, Location, date } = req.body;
+    let { session_id, teacher_email, regno, IP, student_email, Location, date } =
+        req.body;
     let imageName = req.file.filename;
 
     try {
@@ -110,7 +112,10 @@ async function AttendSession(req, res) {
             if (session.session_id === session_id) {
                 let distance = checkStudentDistance(Location, session.location);
                 session.attendance.map((student) => {
-                    if (student.regno === regno || student.student_email === student_email) {
+                    if (
+                        student.regno === regno ||
+                        student.student_email === student_email
+                    ) {
                         present = true;
                     }
                 });
@@ -126,7 +131,7 @@ async function AttendSession(req, res) {
                             duration: session.duration,
                             distance: distance,
                             radius: session.radius,
-                            image: result
+                            image: result,
                         };
                         session.attendance.push({
                             regno,
@@ -155,7 +160,7 @@ async function AttendSession(req, res) {
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
-};
+}
 
 //get student sessions
 async function GetStudentSessions(req, res) {
@@ -168,15 +173,14 @@ async function GetStudentSessions(req, res) {
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
-};
+}
 
 const SessionController = {
     CreateNewSession,
     GetAllTeacherSessions,
     GetQR,
     AttendSession,
-    GetStudentSessions
+    GetStudentSessions,
 };
 
 export default SessionController;
-

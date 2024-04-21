@@ -1,6 +1,15 @@
-
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { TeacherDashboard, HomeLayout, Landing, Login, Logout, Register, Nav, NewSession, StudentDashboard } from "./pages/Index";
+import {
+  TeacherDashboard,
+  HomeLayout,
+  Landing,
+  Login,
+  Logout,
+  Register,
+  Nav,
+  NewSession,
+  StudentDashboard,
+} from "./pages/Index";
 
 const router = createBrowserRouter([
   {
@@ -49,7 +58,7 @@ function App() {
       <Nav />
       <RouterProvider router={router} />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

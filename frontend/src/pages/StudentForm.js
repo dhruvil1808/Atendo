@@ -34,11 +34,13 @@ const StudentForm = ({ togglePopup }) => {
         const canvas = document.createElement("canvas");
         canvas.width = videoRef.current.videoWidth;
         canvas.height = videoRef.current.videoHeight;
-        canvas.getContext("2d").drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+        canvas
+            .getContext("2d")
+            .drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
 
         const photoDataUrl = canvas.toDataURL("image/png");
 
-        setImage(await fetch(photoDataUrl).then(res => res.blob()));
+        setImage(await fetch(photoDataUrl).then((res) => res.blob()));
 
         setPhotoData(photoDataUrl);
         stopCamera();
@@ -77,8 +79,8 @@ const StudentForm = ({ togglePopup }) => {
                             console.log("sending data to server");
                             const response = await axios.post(
                                 "http://localhost:5050/sessions/attend_session",
-                                formData
-                                , {
+                                formData,
+                                {
                                     headers: {
                                         "Content-Type": "multipart/form-data",
                                     },

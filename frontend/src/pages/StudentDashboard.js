@@ -14,13 +14,19 @@ const Dashboard = () => {
     const navigate = useNavigate();
 
     function getStudentSessions() {
-        axios.post("http://localhost:5050/sessions/getStudentSessions", {
-            token: token,
-        }).then((response) => {
-            setSessionList(response.data.sessions);
-        }).catch((error) => {
-            console.log(error);
-        });
+        axios
+            .post("http://localhost:5050/sessions/getStudentSessions", {
+                token: token,
+            })
+            .then((response) => {
+                setSessionList(response.data.sessions);
+            })
+            .catch((error) => {
+                console.log(error);
+                if (error.response.status === 400) {
+                    navigate("/logout");
+                }
+            });
     }
 
     function toggleStudentForm(action) {
@@ -37,7 +43,7 @@ const Dashboard = () => {
     function getDistance(distance, radius) {
         return {
             distance,
-            color: distance <= radius ? "green" : "red"
+            color: distance <= radius ? "green" : "red",
         };
     }
 
@@ -48,11 +54,17 @@ const Dashboard = () => {
             getStudentSessions();
             document.querySelector(".logout").style.display = "block";
             try {
-                if (queryParameters.get("session_id") !== null && queryParameters.get("email") !== null) {
+                if (
+                    queryParameters.get("session_id") !== null &&
+                    queryParameters.get("email") !== null
+                ) {
                     localStorage.setItem("session_id", queryParameters.get("session_id"));
                     localStorage.setItem("teacher_email", queryParameters.get("email"));
                 }
-                if (localStorage.getItem("session_id") == null && localStorage.getItem("teacher_email") == null) {
+                if (
+                    localStorage.getItem("session_id") == null &&
+                    localStorage.getItem("teacher_email") == null
+                ) {
                     toggleStudentForm("close");
                 } else {
                     toggleStudentForm("open");
@@ -88,7 +100,14 @@ const Dashboard = () => {
                                             <th key={index + "3"}>{session.date.split("T")[0]}</th>
                                             <th key={index + "4"}>{session.time}</th>
                                             <th key={index + "5"}>{session.duration}</th>
-                                            <th key={index + "6"} className="distance" style={{ color: getDistance(session.distance, session.radius).color }}>
+                                            <th
+                                                key={index + "6"}
+                                                className="distance"
+                                                style={{
+                                                    color: getDistance(session.distance, session.radius)
+                                                        .color,
+                                                }}
+                                            >
                                                 {getDistance(session.distance, session.radius).distance}
                                             </th>
                                             <th key={index + "7"}>

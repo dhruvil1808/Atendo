@@ -35,7 +35,7 @@ const SessionDetails = (props) => {
         console.log(distance, radius);
         return {
             distance,
-            color: distance <= radius ? "green" : "red"
+            color: distance <= radius ? "green" : "red",
         };
     }
 
@@ -86,8 +86,22 @@ const SessionDetails = (props) => {
                                         <td>{student.date}</td>
                                         <td>{student.student_email}</td>
                                         <td>{student.Location}</td>
-                                        <th key={index + "6"} className="distance" style={{ color: getDistance(student.distance, props.currentSession[0].radius).color }}>
-                                            {getDistance(student.distance, props.currentSession[0].radius).distance}
+                                        <th
+                                            key={index + "6"}
+                                            className="distance"
+                                            style={{
+                                                color: getDistance(
+                                                    student.distance,
+                                                    props.currentSession[0].radius
+                                                ).color,
+                                            }}
+                                        >
+                                            {
+                                                getDistance(
+                                                    student.distance,
+                                                    props.currentSession[0].radius
+                                                ).distance
+                                            }
                                         </th>
                                         {student.image !== undefined ? (
                                             <td>

@@ -15,18 +15,20 @@ const TeacherDashboard = () => {
     const navigate = useNavigate();
 
     //update list of sessions
-    const updateList = async () => {
-        try {
-            const response = await axios.post(
-                "http://localhost:5050/sessions/getSessions",
-                {
-                    token: token,
+    const updateList = () => {
+        axios
+            .post("http://localhost:5050/sessions/getSessions", {
+                token: token,
+            })
+            .then((response) => {
+                setSessionList(response.data.sessions);
+            })
+            .catch((err) => {
+                console.log(err);
+                if (err.response.status === 400) {
+                    navigate("/logout");
                 }
-            );
-            setSessionList(response.data.sessions);
-        } catch (err) {
-            console.error(err);
-        }
+            });
     };
 
     const toggleSessionDetails = (e) => {
@@ -45,8 +47,7 @@ const TeacherDashboard = () => {
     useEffect(() => {
         if (token === "" || token === undefined) {
             navigate("/login");
-        }
-        else {
+        } else {
             updateList();
             document.querySelector(".logout").style.display = "block";
         }
@@ -54,34 +55,40 @@ const TeacherDashboard = () => {
 
     return (
         <div className="dashboard-main">
-            <div className="createbtncol"><button onClick={togglePopup} className="createbtn" >
-                Create Session
-            </button></div>
+            <div className="createbtncol">
+                <button onClick={togglePopup} className="createbtn">
+                    Create Session
+                </button>
+            </div>
             <div className="session-list">
                 <h2>Your Sessions</h2>
                 <table>
-                    <thead><tr>
-                        <th>Name</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Duration</th>
-                        <th>Location</th>
-                        <th>Radius</th>
-                        <th>Action</th>
-                    </tr></thead>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Duration</th>
+                            <th>Location</th>
+                            <th>Radius</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
                     {sessionList.length > 0 ? (
                         sessionList.map((session, index) => {
                             return (
                                 <tbody key={index}>
                                     <tr key={index + "0"} className="session">
                                         <th key={index + "2"}>{session.name}</th>
-                                        <th key={index + "3"}>{session.date.split('T')[0]}</th>
+                                        <th key={index + "3"}>{session.date.split("T")[0]}</th>
                                         <th key={index + "4"}>{session.time}</th>
                                         <th key={index + "5"}>{session.duration}</th>
                                         <th key={index + "6"}>{session.location}</th>
                                         <th key={index + "7"}>{session.radius}</th>
                                         <th key={index + "8"}>
-                                            <button onClick={() => toggleSessionDetails(session.session_id)}>
+                                            <button
+                                                onClick={() => toggleSessionDetails(session.session_id)}
+                                            >
                                                 Details
                                             </button>
                                         </th>
@@ -100,8 +107,11 @@ const TeacherDashboard = () => {
                 </table>
             </div>
             {isSessionDisplay && (
-                <div className="popup-overlay" >
-                    <SessionDetails currentSession={currentSession} toggleSessionDetails={toggleSessionDetails} />
+                <div className="popup-overlay">
+                    <SessionDetails
+                        currentSession={currentSession}
+                        toggleSessionDetails={toggleSessionDetails}
+                    />
                 </div>
             )}
             {isOpen && (

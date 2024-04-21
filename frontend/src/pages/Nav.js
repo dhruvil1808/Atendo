@@ -23,11 +23,10 @@ const Nav = () => {
             pno: localStorage.getItem("pno"),
             dob: localStorage.getItem("dob"),
         });
-
     }, []);
 
     return (
-        <div className='nav-container'>
+        <div className="nav-container">
             <nav>
                 <ul className="nav-links">
                     <li className="nav-link">

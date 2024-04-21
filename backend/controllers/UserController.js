@@ -6,11 +6,11 @@ import jwt from "jsonwebtoken";
 //login
 async function Login(req, res) {
     const { email, password } = req.body;
-    let type = "student"
+    let type = "student";
     //check if user is a student
     let user = await Student.findOne({ email });
     if (!user) {
-        type = "teacher"
+        type = "teacher";
         user = await Teacher.findOne({ email });
     }
 
@@ -23,14 +23,14 @@ async function Login(req, res) {
                 sameSite: "none",
             });
             user.type = type;
-            res.send({ "user": user, "type": type, token: token });
+            res.send({ user: user, type: type, token: token });
         } else {
             res.status(400).json({ message: "Invalid email or password" });
         }
     } else {
         res.status(400).json({ message: "No such User" });
     }
-};
+}
 
 // Create a new user
 async function Signup(req, res) {
@@ -74,7 +74,7 @@ async function Signup(req, res) {
             res.status(400).json({ message: err.message });
         }
     }
-};
+}
 
 function SendMail(req, res) {
     const { email } = req.body;
