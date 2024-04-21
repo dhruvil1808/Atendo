@@ -8,7 +8,7 @@ const Nav = () => {
     // const [auth, setToken] = useState(localStorage.getItem("auth") || "");
     // eslint-disable-next-line
     const [user, setuser] = useState({
-        email: localStorage.getItem("email"),
+        email: localStorage.getItem("auth"),
         name: localStorage.getItem("name"),
         pno: localStorage.getItem("pno"),
         dob: localStorage.getItem("dob"),
@@ -18,7 +18,7 @@ const Nav = () => {
         //check if user is logged in
         //update the user details
         setuser({
-            email: localStorage.getItem("email"),
+            email: localStorage.getItem("auth"),
             name: localStorage.getItem("name"),
             pno: localStorage.getItem("pno"),
             dob: localStorage.getItem("dob"),

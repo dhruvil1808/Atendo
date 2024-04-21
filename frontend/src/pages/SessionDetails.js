@@ -11,7 +11,7 @@ const SessionDetails = (props) => {
         await axios
             .post("http://localhost:5050/sessions/getQR", {
                 session_id: props.currentSession[0].session_id,
-                token: localStorage.getItem("token"),
+                email: localStorage.getItem("auth"),
             })
             .then((response) => {
                 setQR(response.data.url);
@@ -38,6 +38,7 @@ const SessionDetails = (props) => {
             color: distance <= radius ? "green" : "red",
         };
     }
+
 
     useEffect(() => {
         getQR();
