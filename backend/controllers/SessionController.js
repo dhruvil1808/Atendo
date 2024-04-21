@@ -1,5 +1,3 @@
-import dotenv from "dotenv";
-dotenv.config();
 import querystring from "querystring";
 import { Teacher } from "../model/Teacher.js";
 import { Student } from "../model/Student.js";
