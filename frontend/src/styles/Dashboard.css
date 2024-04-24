@@ -71,11 +71,14 @@ h2 {
   padding: 20px;
   margin: 10px;
   width: 300px;
-  background-color: #76abae;
-  color: black;
+  background-color: black;
+  color: #eeeeee;
   border-radius: 5px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+}
+.flashcard:hover {
+  background-color: #222831;
 }
 
 .detailsbtn {

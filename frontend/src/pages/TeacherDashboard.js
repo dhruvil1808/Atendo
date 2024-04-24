@@ -54,24 +54,13 @@ const TeacherDashboard = () => {
   }, [token]);
 
   const FlashCard = ({ session }) => {
-    const [turn, toggleTurn] = useState(true);
-
     return (
       <div
-        className={`flashcard ${turn ? "turn" : ""}`}
-        onClick={() => toggleTurn(!turn)}
+        className="flashcard"
+        onClick={() => toggleSessionDetails(session.session_id)}
       >
         <div className="front">
           <h4>{session.name}</h4>
-          <p>{session.date.split("T")[0]}</p>
-          <p>{session.time}</p>
-          <p>{session.duration}</p>
-          <button
-            className="detailsbtn"
-            onClick={() => toggleSessionDetails(session.session_id)}
-          >
-            View Details
-          </button>
         </div>
       </div>
     );

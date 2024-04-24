@@ -83,7 +83,7 @@ const NewSession = ({ togglePopup }) => {
   };
 
   return (
-    <div className="popup">
+    <div className="new-popup">
       <button onClick={togglePopup}>
         <strong>X</strong>
       </button>

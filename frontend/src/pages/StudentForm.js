@@ -1,7 +1,7 @@
 //create a new session component
 import React, { useState, useRef } from "react";
 import axios from "axios";
-import "../styles/NewSession.css";
+import "../styles/StudentForm.css";
 
 const StudentForm = ({ togglePopup }) => {
   //eslint-disable-next-line
@@ -111,15 +111,15 @@ const StudentForm = ({ togglePopup }) => {
   };
 
   return (
-    <div className="popup">
+    <div className="form-popup">
       <button onClick={togglePopup}>
         <strong>X</strong>
       </button>
-      <div className="popup-inner">
+      <div className="form-popup-inner">
         <h5>Enter Your Details</h5>
         {!photoData && <video ref={videoRef} width={300} autoPlay={true} />}
         {photoData && <img src={photoData} width={300} alt="Captured" />}
-        <div>
+        <div className="cam-btn">
           <button onClick={startCamera}>Start Camera</button>
           <button onClick={capturePhoto}>Capture</button>
           <button onClick={ResetCamera}>Reset</button>

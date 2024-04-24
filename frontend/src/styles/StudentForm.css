@@ -1,0 +1,54 @@
+.form-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9;
+  background-color: black;
+  width: 50%;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.form-popup-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.form-popup-inner > * {
+  width: 80%;
+}
+
+.cam-btn {
+  width: 40%;
+  border: none;
+  margin-left: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cam-btn button {
+  background-color: #222831;
+  color: white;
+  margin-right: 10px;
+}
+
+button[type="submit"] {
+  background-color: #222831;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #393e46;
+}
