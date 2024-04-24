@@ -5,6 +5,8 @@ import axios from "axios";
 import "../styles/Login.css";
 import image512 from "../assets/logo512.png";
 import image192 from "../assets/logo192.png";
+import see from "../assets/see.png";
+import hide from "../assets/hide.png";
 
 const queryParameters = new URLSearchParams(window.location.search);
 axios.defaults.withCredentials = true;
@@ -134,7 +136,7 @@ const Login = () => {
                     }}
                     style={{ color: "white", padding: 0 }}
                   >
-                    hide
+                    <img className="hide" src={hide} alt="hide" />
                   </button>
                 ) : (
                   <button
@@ -144,34 +146,32 @@ const Login = () => {
                     }}
                     style={{ color: "white", padding: 0 }}
                   >
-                    see
+                    <img className="see" src={see} alt="see" />
                   </button>
                 )}
               </div>
 
               <div className="login-center-options">
-                <div className="remember-div">
-                  <input type="checkbox" id="remember-checkbox" />
-                  <label htmlFor="remember-checkbox">
-                    Remember for 30 days
-                  </label>
-                </div>
-                <a href="/" className="forgot-pass-link">
+                <div className="remember-div"></div>
+                <a
+                  href="/"
+                  className="forgot-pass-link"
+                  style={{ color: "#76ABAE" }}
+                >
                   Forgot password?
                 </a>
               </div>
               <div className="login-center-buttons">
                 <button type="submit">Log In</button>
-                <button type="submit">
-                  <img alt="" />
-                  Log In with Google
-                </button>
               </div>
             </form>
           </div>
 
           <p className="login-bottom-p">
-            Don't have an account? <Link to="/register">Sign Up</Link>
+            Don't have an account?{" "}
+            <Link to="/register" style={{ color: "#76ABAE" }}>
+              Sign Up
+            </Link>
           </p>
         </div>
       </div>

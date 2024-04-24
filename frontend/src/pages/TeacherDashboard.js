@@ -53,58 +53,54 @@ const TeacherDashboard = () => {
     }
   }, [token]);
 
+  const FlashCard = ({ session }) => {
+    const [turn, toggleTurn] = useState(true);
+
+    return (
+      <div
+        className={`flashcard ${turn ? "turn" : ""}`}
+        onClick={() => toggleTurn(!turn)}
+      >
+        <div className="front">
+          <h4>{session.name}</h4>
+          <p>{session.date.split("T")[0]}</p>
+          <p>{session.time}</p>
+          <p>{session.duration}</p>
+          <button
+            className="detailsbtn"
+            onClick={() => toggleSessionDetails(session.session_id)}
+          >
+            View Details
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="dashboard-main">
-      <div className="createbtncol">
-        <button onClick={togglePopup} className="createbtn">
-          Create Session
-        </button>
+      <div className="row1">
+        <div className="heading">
+          <h2>Your Sessions</h2>
+        </div>
+        <div className="createbtncol">
+          <button onClick={togglePopup} className="createbtn">
+            Create Session
+          </button>
+        </div>
       </div>
       <div className="session-list">
-        <h2>Your Sessions</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Duration</th>
-              <th>Location</th>
-              <th>Radius</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          {sessionList.length > 0 ? (
-            sessionList.map((session, index) => {
-              return (
-                <tbody key={index}>
-                  <tr key={index + "0"} className="session">
-                    <th key={index + "2"}>{session.name}</th>
-                    <th key={index + "3"}>{session.date.split("T")[0]}</th>
-                    <th key={index + "4"}>{session.time}</th>
-                    <th key={index + "5"}>{session.duration}</th>
-                    <th key={index + "6"}>{session.location}</th>
-                    <th key={index + "7"}>{session.radius}</th>
-                    <th key={index + "8"}>
-                      <button
-                        onClick={() => toggleSessionDetails(session.session_id)}
-                      >
-                        Details
-                      </button>
-                    </th>
-                  </tr>
-                </tbody>
-              );
-            })
-          ) : (
-            <tbody>
-              <tr>
-                <td>No sessions found</td>
-              </tr>
-            </tbody>
-          )}
-          <tfoot></tfoot>
-        </table>
+        {sessionList.length > 0 ? (
+          sessionList.map((session, index) => {
+            return (
+              <div className="flashcard" onClick={() => {}}>
+                <FlashCard session={session} key={index + session.session_id} />
+              </div>
+            );
+          })
+        ) : (
+          <p>No sessions found</p>
+        )}
       </div>
       {isSessionDisplay && (
         <div className="popup-overlay">

@@ -8,7 +8,6 @@
   margin-top: 60px;
   margin-left: 20px;
   height: 80vh;
-  background-color: black;
   border-radius: 5px;
   display: flex;
   justify-content: center;
@@ -21,7 +20,6 @@
 
 .login-right {
   height: 100vh;
-
   flex-grow: 1;
 }
 
@@ -42,7 +40,6 @@
 .login-logo {
   align-self: center;
   border-radius: 5px;
-  background-color: black;
   margin-top: 20px;
 }
 
@@ -75,7 +72,7 @@ form input[type="text"] {
   padding: 16px;
   margin-bottom: 16px;
   border: 0px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #222831;
   outline: none;
   box-sizing: border-box;
 }
@@ -102,6 +99,19 @@ form button[type="submit"] {
   cursor: pointer;
   border-radius: 30px;
   font-weight: 600;
+}
+
+.see {
+  position: absolute;
+  right: 5px;
+  cursor: pointer;
+  outline: none;
+}
+.hide {
+  position: absolute;
+  right: 5px;
+  cursor: pointer;
+  outline: none;
 }
 
 .login-center-options {
@@ -139,9 +149,9 @@ form button[type="submit"] {
 }
 
 .login-center-buttons button:nth-child(1) {
-  background: black;
+  background: #222831;
   color: white;
-  border: 3px solid black;
+  border: 3px solid #222831;
   transition: background 1s linear 0ms;
   transition: color 500ms linear 0ms;
 }

@@ -209,7 +209,11 @@ const Signup = () => {
                   />
                   {showPassword}
                 </div>
-                <button type="button" onClick={toggleThree}>
+                <button
+                  type="button"
+                  onClick={toggleThree}
+                  style={{ width: 100 + "%", marginBottom: 10 + "px" }}
+                >
                   Back
                 </button>
                 <div className="register-center-buttons">
@@ -220,7 +224,10 @@ const Signup = () => {
           </div>
 
           <p className="login-bottom-p">
-            Already have an account? <Link to="/login">Login</Link>
+            Already have an account?{" "}
+            <Link to="/login" style={{ color: "#76ABAE" }}>
+              Login
+            </Link>
           </p>
         </div>
       </div>
