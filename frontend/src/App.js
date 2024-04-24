@@ -1,6 +1,15 @@
-
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Dashboard, HomeLayout, Landing, Login, Logout, Register, Nav, NewSession, StudentDashboard } from "./pages";
+import {
+  TeacherDashboard,
+  HomeLayout,
+  Landing,
+  Login,
+  Logout,
+  Register,
+  Nav,
+  NewSession,
+  StudentDashboard,
+} from "./pages/Index";
 
 const router = createBrowserRouter([
   {
@@ -21,7 +30,7 @@ const router = createBrowserRouter([
       },
       {
         path: "teacher-dashboard",
-        element: <Dashboard />,
+        element: <TeacherDashboard />,
       },
       {
         path: "student-dashboard",
@@ -49,7 +58,7 @@ function App() {
       <Nav />
       <RouterProvider router={router} />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -11,6 +11,7 @@
   position: fixed;
   top: 50%;
   left: 50%;
+  width: 1000px;
   transform: translate(-50%, -50%);
   background-color: black;
   padding: 20px;
@@ -20,6 +21,11 @@
 
 .popup-content {
   display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.popup-inner {
   align-items: center;
 }
 
@@ -52,4 +58,48 @@
 .scrollable-content {
   max-height: 300px; /* Adjust this value as needed */
   overflow-y: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: aliceblue;
+  border-radius: 5px;
+}
+
+th {
+  background-color: #222831;
+  color: white;
+  font-size: medium;
+}
+
+th,
+td {
+  padding: 10px;
+  border: 1px solid black;
+  font-size: small;
+}
+
+.copybtn {
+  padding: 6px 12px;
+  margin-left: 38%;
+  background-color: #222831;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button {
+  padding: 6px 12px;
+  background-color: #222831;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.copybtn:hover {
+  background-color: #31363f;
 }
