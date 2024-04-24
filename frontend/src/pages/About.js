@@ -31,23 +31,29 @@ const About = ({ toggleDone }) => {
 
   return (
     <div className="about">
-      <h1>About</h1>
+      <div>
+        <h6>About</h6>
+      </div>
       <div className="page1">
-        <h2>Page 1</h2>
+        <img src="" alt="image1" />
+        <p>text</p>
         <button onClick={toggleTwo}>Next</button>
       </div>
       <div className="page2" style={{ display: "none" }}>
-        <h2>Page 2</h2>
+        <img src="" alt="img2" />
+        <p>text</p>
         <button onClick={toggleOne}>Previous</button>
         <button onClick={toggleThree}>Next</button>
       </div>
       <div className="page3" style={{ display: "none" }}>
-        <h2>Page 3</h2>
+        <img src="" alt="img3" />
+        <p>text</p>
         <button onClick={toggleTwo}>Previous</button>
         <button onClick={toggleFour}>Next</button>
       </div>
       <div className="page4" style={{ display: "none" }}>
-        <h2>Page 4</h2>
+        <img src="" alt="img4" />
+        <p>text</p>
         <button onClick={toggleThree}>Previous</button>
         <button onClick={toggleDone}>Done</button>
       </div>
