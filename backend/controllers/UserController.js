@@ -83,7 +83,7 @@ function SendMail(req, res) {
   const { email } = req.body;
   const otp = Math.floor(100000 + Math.random() * 900000);
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    service: "smtp",
     auth: {
       user: process.env.EMAIL,
       pass: process.env.PASSWORD,

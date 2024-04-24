@@ -91,7 +91,7 @@ const StudentForm = ({ togglePopup }) => {
               );
               //replace the contents of the popup with the QR code
               document.querySelector(
-                ".popup-inner"
+                ".form-popup-inner"
               ).innerHTML = `<h5>${response.data.message}</h5>`;
             } catch (err) {
               console.error(err);

@@ -34,7 +34,7 @@ const SessionDetails = (props) => {
   function getDistance(distance, radius) {
     return {
       distance,
-      color: distance <= radius ? "green" : "red",
+      color: distance <= parseFloat(radius) ? "green" : "red",
     };
   }
 

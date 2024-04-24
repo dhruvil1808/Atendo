@@ -1,8 +1,15 @@
 import React from "react";
+import { useEffect } from "react";
 import "../styles/Landing.css";
 import { Link } from "react-router-dom";
 
 const Landing = () => {
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      window.location.href = "/login";
+    }
+  });
+
   return (
     <div className="landing-main">
       <h1>Landing Page</h1>
