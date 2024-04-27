@@ -1,10 +1,12 @@
+import dotenv from "dotenv";
+dotenv.config();
 import querystring from "querystring";
 import { Teacher } from "../model/Teacher.js";
 import { Student } from "../model/Student.js";
 import uploadImage from "../middleware/Cloudinary.js";
 
 function getQR(session_id, email) {
-  let url = `http://localhost:3000/login?${querystring.stringify({
+  let url = `${process.env.CLIENT_URL}/login?${querystring.stringify({
     session_id,
     email,
   })}`;

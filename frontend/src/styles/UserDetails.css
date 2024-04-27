@@ -36,3 +36,17 @@
 .username {
   margin-right: 10px;
 }
+
+.user-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: aqua;
+  margin-right: 10px;
+  color: black;
+  padding: 5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
