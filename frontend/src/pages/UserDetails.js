@@ -10,9 +10,23 @@ const UserDetails = ({ user }) => {
     setShowUserDetails(!showUserDetails);
   };
 
+  function getInitials(name) {
+    if (!name) return "";
+    const names = name.split(" ");
+    return names[0][0] + names[names.length - 1][0];
+  }
+
   return (
     <div className="user-details" onClick={onClick}>
-      <h5 className="username">{user.name}</h5>
+      {user.name ? (
+        <div className="user-icon">
+          <h3 style={{ color: "black", fontSize: "15px" }}>
+            {getInitials(user.name)}
+          </h3>
+        </div>
+      ) : (
+        <div></div>
+      )}
       {showUserDetails && (
         <div className="user-details-container">
           <div className="user-details-popup">

@@ -99,7 +99,7 @@ const SessionDetails = (props) => {
                   <tr key={index}>
                     <td>{student.regno}</td>
                     <td>{student.IP}</td>
-                    <td>{student.date}</td>
+                    <td>{student.date.split("T")[0]}</td>
                     <td>{student.student_email}</td>
                     <th
                       key={index + "6"}
