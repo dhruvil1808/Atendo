@@ -14,7 +14,7 @@ function verifyToken(req, res, next) {
     res.status(400).send("Invalid Token");
   }
 }
-
+// For creating JWT Token
 function generateToken(data) {
   return jwt.sign(data, process.env.JWT_SECRET, { expiresIn: "5h" });
 }
@@ -23,5 +23,4 @@ const JWT = {
   verifyToken,
   generateToken,
 };
-
 export default JWT;
