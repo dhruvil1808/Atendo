@@ -5,6 +5,8 @@ import axios from "axios";
 import image512 from "../assets/logo512.png";
 import image192 from "../assets/logo192.png";
 import { SHA256 } from "crypto-js";
+import see from "../assets/see.png";
+import hide from "../assets/hide.png";
 
 const Signup = () => {
   // eslint-disable-next-line
@@ -68,6 +70,16 @@ const Signup = () => {
     let name = document.querySelector("input[name='name']").value;
     let email = document.querySelector("input[name='email']").value;
 
+    if (name.length === 0 || email.length === 0) {
+      alert("Please fill all the fields");
+      return;
+    } else {
+      document.querySelector(".first-slide").style.display = "none";
+      document.querySelector(".second-slide").style.display = "block";
+      document.querySelector(".third-slide").style.display = "none";
+      document.querySelector(".fourth-slide").style.display = "none";
+    }
+
     await axios
       .post("http://localhost:5050/users/sendmail", {
         email: email,
@@ -78,16 +90,6 @@ const Signup = () => {
       .catch((err) => {
         console.log(err);
       });
-
-    if (name.length === 0 || email.length === 0) {
-      alert("Please fill all the fields");
-      return;
-    } else {
-      document.querySelector(".first-slide").style.display = "none";
-      document.querySelector(".second-slide").style.display = "block";
-      document.querySelector(".third-slide").style.display = "none";
-      document.querySelector(".fourth-slide").style.display = "none";
-    }
   };
 
   const toggleThree = () => {
@@ -198,7 +200,27 @@ const Signup = () => {
                     name="password"
                     required={true}
                   />
-                  {showPassword}
+                  {showPassword ? (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowPassword(false);
+                      }}
+                      style={{ color: "white", padding: 0 }}
+                    >
+                      <img className="hide" src={hide} alt="hide" />
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowPassword(true);
+                      }}
+                      style={{ color: "white", padding: 0 }}
+                    >
+                      <img className="see" src={see} alt="see" />
+                    </button>
+                  )}
                 </div>
                 <div className="pass-input-div">
                   <input
@@ -207,7 +229,27 @@ const Signup = () => {
                     name="confirmPassword"
                     required={true}
                   />
-                  {showPassword}
+                  {showPassword ? (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowPassword(false);
+                      }}
+                      style={{ color: "white", padding: 0 }}
+                    >
+                      <img className="hide" src={hide} alt="hide" />
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowPassword(true);
+                      }}
+                      style={{ color: "white", padding: 0 }}
+                    >
+                      <img className="see" src={see} alt="see" />
+                    </button>
+                  )}
                 </div>
                 <button
                   type="button"
