@@ -17,6 +17,7 @@ function verifyToken(req, res, next) {
 }
 
 function generateToken(data) {
+  // Will generate token using user info and server secret key
   return jwt.sign(data, process.env.JWT_SECRET, { expiresIn: "5h" });
 }
 
