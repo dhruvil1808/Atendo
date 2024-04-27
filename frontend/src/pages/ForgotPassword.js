@@ -107,7 +107,7 @@ const ForgotPassword = () => {
             <img alt="logo" src={image192} />
           </div>
           <div className="register-center">
-            <h2>Welcome to our website!</h2>
+            <h2>Forgot your Password?</h2>
             <p>Please enter your Email Id</p>
             <form onSubmit={handleRegisterSubmit}>
               <div className="page1">

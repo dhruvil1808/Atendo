@@ -84,11 +84,11 @@ async function ForgotPassword(req, res) {
   let user = await Student.findOneAndUpdate({ email }, { password }).exec();
   if (!user) {
     user = await Teacher.findOneAndUpdate({ email }, { password }).exec();
-  } else {
-    res.status(400).json({ message: "No such User" });
   }
   if (user) {
     res.status(200).json({ message: "Password changed successfully" });
+  } else {
+    res.status(400).json({ message: "No such User" });
   }
 }
 
