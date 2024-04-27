@@ -1,4 +1,10 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
 .slider {
+  position: relative;
   max-width: 60vw;
   margin-top: -100px;
 }
@@ -14,54 +20,19 @@
 
 .slide span {
   width: 100%;
-  height: 98.5%;
   position: absolute;
-  bottom: 6px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   color: #fff;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 5px;
-}
-
-.slide span li {
-  list-style-type: none;
-  padding: 10px;
-}
-
-.slide span h1 {
-  font-size: 1.5em;
-  text-align: center;
-  padding: 10px;
-}
-
-.slide span p {
-  font-size: 1em;
-  text-align: center;
-  padding: 10px;
-}
-
-/* animation for span to slide up and slide down*/
-.slide span {
-  animation: slide-up 0.5s ease;
-}
-
-@keyframes slide-up {
-  0% {
-    height: 0;
-  }
-  100% {
-    height: 95%;
-  }
 }
 
 .slide img {
   width: 100%;
-  border-radius: 5px;
-  border: 1px solid black;
 }
 
 .navigation-bottom {
@@ -96,15 +67,4 @@
 
 .prev {
   left: 10px;
-}
-
-.skipbtn {
-  padding: 10px 20px;
-  font-size: medium;
-  position: absolute;
-  top: 95%;
-  right: 20%;
-  cursor: pointer;
-  transform: translateY(-100%);
-  z-index: 10000;
 }
