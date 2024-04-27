@@ -3,6 +3,7 @@ dotenv.config();
 import jwt from "jsonwebtoken";
 
 function verifyToken(req, res, next) {
+  // Toverify user Token
   const token = req.cookies.token;
   if (!token) return res.status(401).send("Access Denied");
 
