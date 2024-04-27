@@ -154,7 +154,7 @@ const Login = () => {
               <div className="login-center-options">
                 <div className="remember-div"></div>
                 <a
-                  href="/"
+                  href="/forgot-password"
                   className="forgot-pass-link"
                   style={{ color: "#76ABAE" }}
                 >

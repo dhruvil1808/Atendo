@@ -9,6 +9,7 @@ import {
   Nav,
   NewSession,
   StudentDashboard,
+  ForgotPassword,
 } from "./pages/Index";
 
 const router = createBrowserRouter([
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "create-session",
         element: <NewSession />,
+      },
+      {
+        path: "forgot-password",
+        element: <ForgotPassword />,
       },
       {
         path: "*",

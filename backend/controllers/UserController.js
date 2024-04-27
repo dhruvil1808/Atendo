@@ -34,7 +34,6 @@ async function Login(req, res) {
     res.status(400).json({ message: "No such User" });
   }
 }
-
 // Create a new user
 async function Signup(req, res) {
   const { name, email, pno, dob, password, type } = req.body;
@@ -79,6 +78,21 @@ async function Signup(req, res) {
   }
 }
 
+//change password
+async function ForgotPassword(req, res) {
+  const { email, password } = req.body;
+  //check if user is a student
+  let user = await Student.findOneAndUpdate({ email }, { password }).exec();
+  if (!user) {
+    user = await Teacher.findOneAndUpdate({ email }, { password }).exec();
+  } else {
+    res.status(400).json({ message: "No such User" });
+  }
+  if (user) {
+    res.status(200).json({ message: "Password changed successfully" });
+  }
+}
+
 function SendMail(req, res) {
   const { email } = req.body;
   const otp = Math.floor(100000 + Math.random() * 900000);
@@ -110,6 +124,7 @@ function SendMail(req, res) {
 const UserController = {
   Login,
   Signup,
+  ForgotPassword,
   SendMail,
 };
 
