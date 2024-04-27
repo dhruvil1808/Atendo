@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 import About from "./About";
 
 const Landing = () => {
-  const [Tutorial, setTutorial] = React.useState(true);
+  const [Tutorial, setTutorial] = React.useState(
+    localStorage.getItem("tutorial") ? false : true
+  );
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -15,6 +17,7 @@ const Landing = () => {
 
   function toggleDone() {
     setTutorial(false);
+    localStorage.setItem("tutorial", false);
   }
 
   return (

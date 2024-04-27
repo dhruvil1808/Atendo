@@ -108,15 +108,16 @@ const ForgotPassword = () => {
           </div>
           <div className="register-center">
             <h2>Forgot your Password?</h2>
-            <p>Please enter your Email Id</p>
             <form onSubmit={handleRegisterSubmit}>
               <div className="page1">
+                <p>Please enter your Email Id</p>
                 <input type="email" placeholder="Email" required name="email" />
                 <button type="button" onClick={toggleTwo}>
                   Send OTP
                 </button>
               </div>
               <div className="page2" style={{ display: "none" }}>
+                <p>Please enter OTP</p>
                 <input
                   type="text"
                   placeholder="OTP"
@@ -128,6 +129,7 @@ const ForgotPassword = () => {
                 </button>
               </div>
               <div className="page3" style={{ display: "none" }}>
+                <p>Please enter new password</p>
                 <input
                   type="password"
                   placeholder="New Password"

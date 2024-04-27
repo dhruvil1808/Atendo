@@ -82,8 +82,14 @@ const TeacherDashboard = () => {
         {sessionList.length > 0 ? (
           sessionList.map((session, index) => {
             return (
-              <div className="flashcard" onClick={() => {}}>
-                <FlashCard session={session} key={index + session.session_id} />
+              <div
+                key={index + session.session_id}
+                className="flashcard"
+                onClick={() => {
+                  toggleSessionDetails(session.session_id);
+                }}
+              >
+                <FlashCard session={session} />
               </div>
             );
           })

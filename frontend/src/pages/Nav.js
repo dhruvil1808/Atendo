@@ -7,7 +7,6 @@ import logo from "../assets/logo192.png";
 import logout from "../assets/logout.png";
 
 const Nav = () => {
-  // const [auth, setToken] = useState(localStorage.getItem("auth") || "");
   // eslint-disable-next-line
   const [user, setuser] = useState({
     email: localStorage.getItem("email"),
@@ -16,15 +15,17 @@ const Nav = () => {
     dob: localStorage.getItem("dob"),
   });
 
-  useEffect(() => {
-    //check if user is logged in
-    //update the user details
+  const refresh = () => {
     setuser({
       email: localStorage.getItem("email"),
       name: localStorage.getItem("name"),
       pno: localStorage.getItem("pno"),
       dob: localStorage.getItem("dob"),
     });
+  };
+
+  useEffect(() => {
+    refresh();
   }, []);
 
   return (

@@ -111,7 +111,7 @@ const About = ({ toggleDone }) => {
         ))}
       </div>
       <div className="navigation">
-        <div class="navigation-bottom">
+        <div className="navigation-bottom">
           {assets.map((e, i) => (
             <button
               className={`preview ${i === active ? "active" : ""}`}
@@ -123,11 +123,11 @@ const About = ({ toggleDone }) => {
           ))}
         </div>
         <div className="navigation-next-prev">
-          <div class="next-prev prev" onClick={onPrev}>
+          <div className="next-prev prev" onClick={onPrev}>
             {" "}
             <img src={prev} alt="<" />
           </div>
-          <div class="next-prev next" onClick={onNext}>
+          <div className="next-prev next" onClick={onNext}>
             {" "}
             <img src={next} alt=">" />
           </div>

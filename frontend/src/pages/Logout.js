@@ -6,14 +6,16 @@ const Logout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.removeItem("email");
-    localStorage.removeItem("dob");
-    localStorage.removeItem("name");
-    localStorage.removeItem("pno");
-    localStorage.removeItem("type");
-    localStorage.removeItem("email");
-    localStorage.removeItem("session_id");
-    localStorage.removeItem("token");
+    // localStorage.removeItem("email");
+    // localStorage.removeItem("dob");
+    // localStorage.removeItem("name");
+    // localStorage.removeItem("pno");
+    // localStorage.removeItem("type");
+    // localStorage.removeItem("email");
+    // localStorage.removeItem("session_id");
+    // localStorage.removeItem("token");
+    // localStorage.removeItem("tutorial");
+    localStorage.clear();
 
     setTimeout(() => {
       navigate("/");
