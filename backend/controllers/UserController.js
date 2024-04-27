@@ -77,7 +77,6 @@ async function Signup(req, res) {
     }
   }
 }
-
 //change password
 async function ForgotPassword(req, res) {
   const { email, password } = req.body;
@@ -93,6 +92,24 @@ async function ForgotPassword(req, res) {
   }
 }
 
+//edit user details
+async function EditUserDetails(req, res) {
+  const { email, name, pno, dob } = req.body;
+  //check if user is a student
+  let user = await Student.findOne
+    .findOneAndUpdate({ email }, { name, pno, dob })
+    .exec();
+  if (!user) {
+    user = await Teacher.findOneAndUpdate
+      .findOneAndUpdate({ email }, { name, pno, dob })
+      .exec();
+  }
+  if (user) {
+    res.status(200).json({ message: "User updated" });
+  }
+}
+
+//send mail
 function SendMail(req, res) {
   const { email } = req.body;
   const otp = Math.floor(100000 + Math.random() * 900000);
@@ -125,6 +142,7 @@ const UserController = {
   Login,
   Signup,
   ForgotPassword,
+  EditUserDetails,
   SendMail,
 };
 

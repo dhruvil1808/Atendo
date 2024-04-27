@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "../styles/ForgotPassword.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import image512 from "../assets/logo512.png";
@@ -52,7 +51,7 @@ const ForgotPassword = () => {
       alert("Please enter OTP");
       return;
     }
-    if (otp == SaveOTP) {
+    if (parseInt(otp) === parseInt(SaveOTP)) {
       document.querySelector(".page2").style.display = "none";
       document.querySelector(".page3").style.display = "block";
     } else {
