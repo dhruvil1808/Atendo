@@ -7,7 +7,7 @@ const userSchema = new schema(
     email: { type: String, required: true },
     pno: { type: String, required: true },
     dob: { type: String, required: true },
-    password: { type: String, required: true },
+    password: { type: String, required: true }, // Password save as hash
     sessions: [
       {
         session_id: { type: String, required: true },
