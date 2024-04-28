@@ -52,13 +52,6 @@ To run Attendo locally, follow these steps:
 
 The application is deployed and accessible at [Attendo Deploy](https://atendo-deploy.onrender.com).
 
-## Contributing
-
-Contributions are welcome! Please follow the [contribution guidelines](CONTRIBUTING.md) when contributing to this project.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
 
 ## Contact
 
