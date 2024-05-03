@@ -10,11 +10,11 @@ router.post("/signup", UserController.Signup);
 // forgot password
 router.post("/forgotpassword", UserController.ForgotPassword);
 //edit user details
-router.post(
-  "/edituserdetails",
-  JWT.verifyToken,
-  UserController.EditUserDetails
-);
+// router.post(
+//   "/edituserdetails",
+//   JWT.verifyToken,
+//   UserController.EditUserDetails
+// );
 // send mail
 router.post("/sendmail", UserController.SendMail);
 
