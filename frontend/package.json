@@ -7,7 +7,7 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.6.8",
+    "axios": "^1.7.4",
     "buffer": "^6.0.3",
     "buffers": "^0.1.1",
     "crypto-js": "^4.2.0",
